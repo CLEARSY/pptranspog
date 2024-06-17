@@ -328,7 +328,7 @@ namespace ppTransTPTP {
             auto tptp_type = "tff(" + res + "_type, type, " + res + " : $tType).";
             auto tptp_empty = "tff(" + res + "_empty, type, " + res + "_empty : " + res + ").";
             auto tptp_insert =
-                    "tff(" + res + "_insert, type, " + res + " : (" + typeName + ") > " + res
+                    "tff(" + res + "_insert, type, " + res + "_insert : (" + typeName + ") > " + res
                     + ").";
             tptpDeclarations[res] = tptp_type + "\n" + tptp_empty + "\n" + tptp_insert;
         }
@@ -352,7 +352,7 @@ namespace ppTransTPTP {
             auto tptp_type = "tff(" + res + "_type, type, " + res + " : $tType).";
             auto tptp_empty = "tff(" + res + "_empty, type, " + res + "_empty : " + res + ").";
             auto tptp_insert =
-                    "tff(" + res + "_insert, type, " + res + " : (" + typeNameLhs + " * " + typeNameRhs + ") > " + res
+                    "tff(" + res + "_insert, type, " + res + "_insert : (" + typeNameLhs + " * " + typeNameRhs + ") > " + res
                     + ").";
             auto tptp_in =
                     "tff(" + res + "_in, type, " + res + "_in : (" + typeNameLhs + " * " + typeNameRhs + " * " + res +
