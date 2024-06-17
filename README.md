@@ -12,7 +12,7 @@ or to TPTP format based on the pptrans approach.
 * PPTRANSSMT: a C++ program to translate POG files to SMTLIB-2.6
   format, based on an extension of the pptrans encoding described in the paper [Integrating SMT solvers in Rodin](http://dx.doi.org/10.3233/SAT190123).
 
-* PPTRANSSMT: a C++ program to translate POG files to TPTP (tff)
+* PPTRANSTPTP: a C++ program to translate POG files to TPTP (tff)
   format, in a similar way to the SMTLIB-2.6 translation.
 
 ## COMPILING
