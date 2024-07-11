@@ -44,3 +44,8 @@ endif()
 add_subdirectory(POGLoader)
 add_subdirectory(PPTRANSSMT)
 add_subdirectory(PPTransTPTP)
+
+if(PROJECT_IS_TOP_LEVEL)
+  include(CTest)
+  add_subdirectory(test)
+endif()

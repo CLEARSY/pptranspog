@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export PPTRANSTPTP="${PPTRANSTPTP_BINARY_DIR}/ppTransTPTP"
+export PPTRANSSMT="${PPTRANSSMT_BINARY_DIR}/ppTransSmt"

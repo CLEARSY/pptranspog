@@ -1,0 +1,139 @@
+#!/bin/bash
+set -x
+# Executes a test from within $HOMETEST, with identifier TESTID, for format $FORMAT
+#
+if [ "$#" -ne 3 ]; then
+  echo "Error: Usage is $0 DIRECTORY TESTID FORMAT" >&2
+  exit 1
+fi
+
+if ! [ -e "$1" ]; then
+  echo "Error: $1 not found" >&2
+  exit 1
+fi
+
+if ! [ -d "$1" ]; then
+  echo "Error: $1 not a directory" >&2
+  exit 1
+fi
+
+HOMETEST=$1
+TESTID=$2
+FORMAT=$3
+
+cd $HOMETEST
+
+INPUTDIR="${HOMETEST}/input/${TESTID}"
+
+if ! [ -e "$INPUTDIR" ]; then
+  echo "Error: $1 not found" >&2
+  exit 1
+fi
+
+if ! [ -d "$INPUTDIR" ]; then
+  echo "Error: $1 not a directory" >&2
+  exit 1
+fi
+
+. ./setENV
+
+# Verifies environment is correctly set
+if [ -z "${PPTRANSTPTP}" ]
+then
+    echo "Error: \$PPTRANSTPTP not set."
+    exit 1
+fi
+if [ -z "${PPTRANSSMT}" ]
+then
+    echo "Error: \$PPTRANSSMT not set."
+    exit 1
+fi
+
+# Verifies that test input directory has one and only one pog file
+if [[ `ls $INPUTDIR/*pog | wc -l` -ne 1 ]]
+then
+  echo "Error: $INPUTDIR should have one and only one POG file (extension .pog)"
+  exit 1
+fi
+
+# Gets into $comp the base name of the pog file
+pog=`find input/test001/ -name "*pog" -print`
+COMP=`basename $pog .pog`
+
+if [ "$FORMAT" = "SMT" ]
+then
+  PROGRAM="${PPTRANSSMT} -n"
+  SUFFIX="smt2"
+elif [ "$FORMAT" = "TPTP" ]
+then
+  PROGRAM="${PPTRANSTPTP}"
+  SUFFIX="tptp"
+else
+  echo "Error: format $FORMAT not recognized (should be either SMT or TPTP)"
+  exit 1
+fi
+
+# Test starts now
+#   - create directory to store outputs
+#   - run the encoder on the selected test and format
+#   - compare the result and the reference
+
+mkdir -p output/$TESTID/result/$FORMAT
+
+$PROGRAM -i input/$TESTID/$COMP.pog -o output/$TESTID/result/$FORMAT/$COMP > output/$TESTID/result/$FORMAT/stdout 2> output/$TESTID/result/$FORMAT/stderr
+echo $? > output/$TESTID/result/$FORMAT/exitcode
+diff output/$TESTID/reference/$FORMAT/exitcode output/$TESTID/result/$FORMAT/exitcode
+EXITCODE=0
+if [ $? -ne 0 ]
+then
+  echo "Error: exit code differs from reference"
+  EXITCODE=1
+fi
+diff output/$TESTID/reference/$FORMAT/stdout output/$TESTID/result/$FORMAT/stdout
+if [ $? -ne 0 ]
+then
+  echo "Error: standard output differs from reference"
+  EXITCODE=1
+fi
+diff output/$TESTID/reference/$FORMAT/stderr output/$TESTID/result/$FORMAT/stderr
+if [ $? -ne 0 ]
+then
+  echo "Error: standard error differs from reference"
+  EXITCODE=1
+fi
+for rf in `ls output/$TESTID/reference/$FORMAT/*.$SUFFIX`
+do
+  name=`basename $rf`
+  wf="output/$TESTID/result/$FORMAT/$name"
+  if [ ! -f $wf ]
+  then
+    echo "Error: $wf file expected but not produced"
+    EXITCODE=1
+  fi
+  diff $rf $wf
+  if [ $? -ne 0 ]
+  then
+    echo "Error: result file $wf differs from reference file $rf"
+    EXITCODE=1
+  fi
+done
+for wf in `ls output/$TESTID/result/$FORMAT/*.$SUFFIX`
+do
+  name=`basename $wf`
+  rf="output/$TESTID/reference/$FORMAT/$name"
+  if [ ! -f $rf ]
+  then
+    echo "Error: $wf file produced but not expected"
+    EXITCODE=1
+  fi
+done
+
+if [ $EXITCODE -eq 0 ]
+then
+  rm -fr output/$TESTID/result/$FORMAT
+  echo "Test $TESTID $FORMAT OK."
+else
+  echo "Error: $TESTID $FORMAT failed."
+fi
+
+exit $EXITCODE
