@@ -1,6 +1,6 @@
 (set-option :print-success false)
 (set-logic AUFNIRA)
-; PO 7 0 
+; PO 1 0 
 ; Group AssertionLemmas
 ; Tag Assertion is verified
 ; Prelude
@@ -173,23 +173,22 @@
 (define-fun MinInt () Int (- 2147483648))
 (define-fun MaxInt () Int 2147483647)
 ; Global declarations
-(declare-fun g_c1_1 () Int)
-(declare-fun g_s1_0 () (P Int))
+(declare-fun g_S1_0 () (P Int))
+(declare-fun g_S2_1 () (P Int))
+(declare-fun g_S3_2 () (P Int))
 ; Defines
 (assert (forall ( (x_3 Int) ) (= (and (<= 0 x_3) (<= x_3 MaxInt)) (and (>= x_3 0) (<= x_3 MaxInt)))))
 (assert (forall ( (x_4 Int) ) (= (and (>= x_4 MinInt) (<= x_4 MaxInt)) (and (>= x_4 MinInt) (<= x_4 MaxInt)))))
-(assert true)
-(assert (forall ( (x_5 Int) ) (=> (mem0 x_5 g_s1_0) true)))
+(assert (forall ( (x_5 Int) ) (=> (mem0 x_5 g_S1_0) true)))
+(assert (forall ( (x_6 Int) ) (=> (mem0 x_6 g_S2_1) true)))
+(assert (forall ( (x_7 Int) ) (=> (mem0 x_7 g_S3_2) true)))
+(assert (forall ( (x_8 Int) ) (= (mem0 x_8 g_S1_0) false)))
+(assert (forall ( (x_9 Int) ) (= (mem0 x_9 g_S2_1) (= x_9 1))))
+(assert (forall ( (x_10 Int) ) (= (mem0 x_10 g_S3_2) (or  (= x_10 1) (= x_10 2) (= x_10 3)))))
 ; Global hypotheses
-(assert (= 1 (+ 1 1)))
-(assert (= g_c1_1 (+ g_c1_1 1)))
-(assert (forall ( (x_26 Int) ) (= (exists ( (x_27 Int) ) (and  (= x_27 g_c1_1) (= x_26 (+ x_27 1)))) (mem0 x_26 g_s1_0))))
-(assert (forall ( (x_28 Int) ) (= (exists ( (x_29 Int) ) (and  (mem0 x_29 g_s1_0) (= x_28 (+ x_29 1)))) (mem0 x_28 g_s1_0))))
-(assert (= 1 (- 1 1)))
-(assert (= g_c1_1 (- g_c1_1 1)))
-(assert (forall ( (x_30 Int) ) (= (exists ( (x_31 Int) ) (and  (= x_31 g_c1_1) (= x_30 (- x_31 1)))) (mem0 x_30 g_s1_0))))
+(assert (forall ((x_14 (P Int)) ) (=> (forall ( (x_15 Int) ) (= (mem0 x_15 x_14) (exists ( (x_16 Int) ) (and  (mem0 x_16 g_S1_0) (= x_15 x_16))))) (= (isum x_14) 0))))
 ; Local hypotheses
 ; Goal
-(assert (not (forall ( (x_32 Int) ) (= (exists ( (x_33 Int) ) (and  (mem0 x_33 g_s1_0) (= x_32 (- x_33 1)))) (mem0 x_32 g_s1_0)))))
+(assert (not (forall ((x_17 (P Int)) ) (=> (forall ( (x_18 Int) ) (= (mem0 x_18 x_17) (exists ( (x_19 Int) ) (and  (mem0 x_19 g_S2_1) (= x_18 x_19))))) (= (isum x_17) 1)))))
 (check-sat)
 (exit)

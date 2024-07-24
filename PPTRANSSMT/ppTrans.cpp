@@ -1,26 +1,27 @@
 /** ppTrans.cpp
 
    \copyright Copyright © CLEARSY 2022
-   \license This file is part of ppTransSmt.
+   \license This file is part of pptranspog
 
-   ppTransSmt is free software: you can redistribute it and/or modify it
+   pptranspog is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
-    ppTransSmt is distributed in the hope that it will be useful, but
+    pptranspog is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with ppTransSmt. If not, see <https://www.gnu.org/licenses/>.
+    along with pptranspog. If not, see <https://www.gnu.org/licenses/>.
 */
 #include "ppTrans.h"
 #include "decomposition.h"
 #include "predDesc.h"
 #include "exprDesc.h"
 #include "exprWriter.h"
+#include "theorySMTLIB.h"
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -650,7 +651,7 @@ namespace ppTrans {
                                 Expr l = Expr::makeQuantifiedExpr(Expr::QuantifiedOp::Lambda,q.vars,q.cond.copy(),q.body.copy(),
                                         BType::POW(BType::PROD(tdom,q.body.getType())));
                                 Expr ran = Expr::makeUnaryExpr(Expr::UnaryOp::Range,std::move(l),BType::POW_INT);
-                                str << "(sum " << ctx.nameSimpleExpression(ran,eqs,used_ids) << ")";
+                                str << "(isum " << ctx.nameSimpleExpression(ran,eqs,used_ids) << ")";
                                 return;
                             }
                         case Expr::QuantifiedOp::IProduct:
@@ -2353,189 +2354,97 @@ namespace ppTrans {
             const std::string &minint,
             const std::string &maxint)
     {
-        out << "(declare-sort P 1)\n";
-        out << "(declare-sort C 2)\n";
-        out << "(declare-sort String 0)\n";
-        out << "(declare-sort Float 0)\n";
-        out << "(declare-fun divB (Int Int) Int)\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Int) (y Int))\n";
-        out << "  (!\n";
-        out << "   (and\n";
-        out << "    (=> (and (<= 0 x) (< 0 y)) (= (divB x y) (div x y)))\n";
-        out << "    (=> (and (<= x 0) (< 0 y)) (= (divB x y) (- 0 (div (- 0 x) y))))\n";
-        out << "    (=> (and (<= 0 x) (< y 0)) (= (divB x y) (div x y)))\n";
-        out << "    (=> (and (<= x 0) (< y 0)) (= (divB x y) (div (- 0 x) (- 0 y))))\n";
-        out << "   )\n";
-        out << "   :pattern ((divB x y))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |divB_axiom|\n";
-        out << "))\n";
-        out << "(declare-fun exp (Int Int) Int)\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Int))\n";
-        out << "  (!\n";
-        out << "   (= (exp x 0) 1)\n";
-        out << "   :pattern ((exp x 0))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |exp_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Int) (n Int))\n";
-        out << "  (!\n";
-        out << "   (=> (>= n 1) (= (exp x n) (* x (exp x (- n 1)))))\n";
-        out << "   :pattern ((exp x n))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |exp_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun rexp (Real Int) Real)\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Real))\n";
-        out << "  (!\n";
-        out << "   (=> (not (= x 0.0)) (= (rexp x 0) 1.0))\n";
-        out << "   :pattern ((rexp x 0))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rexp_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Real) (n Int))\n";
-        out << "  (!\n";
-        out << "   (=> (>= n 1) (= (rexp x n) (* x (rexp x (- n 1)))))\n";
-        out << "   :pattern ((rexp x n))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rexp_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun ceiling (Real) Int)\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Real))\n";
-        out << "  (!\n";
-        out << "   (=> (is_int x) (= (ceiling x) (to_int x)))\n";
-        out << "   :pattern ((ceiling x))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |ceiling_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((x Real))\n";
-        out << "  (!\n";
-        out << "   (=> (not (is_int x)) (= (ceiling x) (+ (to_int x) 1)))\n";
-        out << "   :pattern ((ceiling x))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |ceiling_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun mem0 (Int (P Int)) Bool)\n";
-        out << "(declare-fun sum ((P Int)) Int)\n";
-        out << "(assert (!\n";
-        out << " (forall ((s (P Int)))\n";
-        out << "  (=>\n";
-        out << "   (forall ((x Int)) (not (mem0 x s)))\n";
-        out << "   (= (sum s) 0)\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |sum_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((s1 (P Int)) (s2 (P Int)) (e Int) (n Int))\n";
-        out << "  (=>\n";
-        out << "   (and\n";
-        out << "    (= (sum s1) n)\n";
-        out << "    (not (mem0 e s1))\n";
-        out << "    (forall ((x Int)) (=> (mem0 x s2) (or (= x e) (mem0 x s1))))\n";
-        out << "    (forall ((x Int)) (=> (or (= x e) (mem0 x s1)) (mem0 x s2)))\n";
-        out << "   )\n";
-        out << "   (= (sum s2) (+ n e))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |sum_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun prod ((P Int)) Int)\n";
-        out << "(assert (!\n";
-        out << " (forall ((s (P Int)))\n";
-        out << "  (=>\n";
-        out << "   (forall ((x Int)) (not (mem0 x s)))\n";
-        out << "   (= (prod s) 1)\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |prod_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((s1 (P Int)) (s2 (P Int)) (e Int) (n Int))\n";
-        out << "  (=>\n";
-        out << "   (and\n";
-        out << "    (= (prod s1) n)\n";
-        out << "    (not (mem0 e s1))\n";
-        out << "    (forall ((x Int)) (=> (mem0 x s2) (or (= x e) (mem0 x s1))))\n";
-        out << "    (forall ((x Int)) (=> (or (= x e) (mem0 x s1)) (mem0 x s2)))\n";
-        out << "   )\n";
-        out << "   (= (prod s2) (* n e))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |prod_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun mem1 (Real (P Real)) Bool)\n";
-        out << "(declare-fun rsum ((P Real)) Real)\n";
-        out << "(assert (!\n";
-        out << " (forall ((s (P Real)))\n";
-        out << "  (=>\n";
-        out << "   (forall ((x Real)) (not (mem1 x s)))\n";
-        out << "   (= (rsum s) 0.0)\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rsum_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((s1 (P Real)) (s2 (P Real)) (e Real) (n Real))\n";
-        out << "  (=>\n";
-        out << "   (and\n";
-        out << "    (= (rsum s1) n)\n";
-        out << "    (not (mem1 e s1))\n";
-        out << "    (forall ((x Real)) (=> (mem1 x s2) (or (= x e) (mem1 x s1))))\n";
-        out << "    (forall ((x Real)) (=> (or (= x e) (mem1 x s1)) (mem1 x s2)))\n";
-        out << "   )\n";
-        out << "   (= (rsum s2) (+ n e))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rsum_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun rprod ((P Real)) Real)\n";
-        out << "(assert (!\n";
-        out << " (forall ((s (P Real)))\n";
-        out << "  (=>\n";
-        out << "   (forall ((x Real)) (not (mem1 x s)))\n";
-        out << "   (= (rprod s) 1.0)\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rprod_axiom_1|\n";
-        out << "))\n";
-        out << "(assert (!\n";
-        out << " (forall ((s1 (P Real)) (s2 (P Real)) (e Real) (n Real))\n";
-        out << "  (=>\n";
-        out << "   (and\n";
-        out << "    (= (rprod s1) n)\n";
-        out << "    (not (mem1 e s1))\n";
-        out << "    (forall ((x Real)) (=> (mem1 x s2) (or (= x e) (mem1 x s1))))\n";
-        out << "    (forall ((x Real)) (=> (or (= x e) (mem1 x s1)) (mem1 x s2)))\n";
-        out << "   )\n";
-        out << "   (= (rprod s2) (* n e))\n";
-        out << "  )\n";
-        out << " )\n";
-        out << " :named |rprod_axiom_2|\n";
-        out << "))\n";
-        out << "(declare-fun fle (Float Float) Bool)\n";
-        out << "(declare-fun flt (Float Float) Bool)\n";
-        out << "(declare-fun fge (Float Float) Bool)\n";
-        out << "(declare-fun fgt (Float Float) Bool)\n";
-        out << "(declare-fun fadd (Float Float) Float)\n";
-        out << "(declare-fun fsub (Float Float) Float)\n";
-        out << "(declare-fun fmul (Float Float) Float)\n";
-        out << "(declare-fun fdiv (Float Float) Float)\n";
-        out << "(define-fun MinInt () Int " << minint << ")\n";
-        out << "(define-fun MaxInt () Int " << maxint << ")\n";
+      out << "(declare-sort P 1)\n";
+      out << "(declare-sort C 2)\n";
+      out << "(declare-sort String 0)\n";
+      out << "(declare-sort Float 0)\n";
+      out << "(declare-fun divB (Int Int) Int)\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Int) (y Int))\n";
+      out << "  (!\n";
+      out << "   (and\n";
+      out << "    (=> (and (<= 0 x) (< 0 y)) (= (divB x y) (div x y)))\n";
+      out << "    (=> (and (<= x 0) (< 0 y)) (= (divB x y) (- 0 (div (- 0 x) "
+             "y))))\n";
+      out << "    (=> (and (<= 0 x) (< y 0)) (= (divB x y) (div x y)))\n";
+      out << "    (=> (and (<= x 0) (< y 0)) (= (divB x y) (div (- 0 x) (- 0 "
+             "y))))\n";
+      out << "   )\n";
+      out << "   :pattern ((divB x y))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |divB_axiom|\n";
+      out << "))\n";
+      out << "(declare-fun exp (Int Int) Int)\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Int))\n";
+      out << "  (!\n";
+      out << "   (= (exp x 0) 1)\n";
+      out << "   :pattern ((exp x 0))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |exp_axiom_1|\n";
+      out << "))\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Int) (n Int))\n";
+      out << "  (!\n";
+      out << "   (=> (>= n 1) (= (exp x n) (* x (exp x (- n 1)))))\n";
+      out << "   :pattern ((exp x n))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |exp_axiom_2|\n";
+      out << "))\n";
+      out << "(declare-fun rexp (Real Int) Real)\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Real))\n";
+      out << "  (!\n";
+      out << "   (=> (not (= x 0.0)) (= (rexp x 0) 1.0))\n";
+      out << "   :pattern ((rexp x 0))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |rexp_axiom_1|\n";
+      out << "))\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Real) (n Int))\n";
+      out << "  (!\n";
+      out << "   (=> (>= n 1) (= (rexp x n) (* x (rexp x (- n 1)))))\n";
+      out << "   :pattern ((rexp x n))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |rexp_axiom_2|\n";
+      out << "))\n";
+      out << "(declare-fun ceiling (Real) Int)\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Real))\n";
+      out << "  (!\n";
+      out << "   (=> (is_int x) (= (ceiling x) (to_int x)))\n";
+      out << "   :pattern ((ceiling x))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |ceiling_axiom_1|\n";
+      out << "))\n";
+      out << "(assert (!\n";
+      out << " (forall ((x Real))\n";
+      out << "  (!\n";
+      out << "   (=> (not (is_int x)) (= (ceiling x) (+ (to_int x) 1)))\n";
+      out << "   :pattern ((ceiling x))\n";
+      out << "  )\n";
+      out << " )\n";
+      out << " :named |ceiling_axiom_2|\n";
+      out << "))\n";
+      out << "(declare-fun mem0 (Int (P Int)) Bool)\n";
+      out << SMTLIB::isum << SMTLIB::iprod;
+      out << "(declare-fun mem1 (Real (P Real)) Bool)\n";
+      out << SMTLIB::rsum << SMTLIB::rprod;
+      out << "(declare-fun fle (Float Float) Bool)\n";
+      out << "(declare-fun flt (Float Float) Bool)\n";
+      out << "(declare-fun fge (Float Float) Bool)\n";
+      out << "(declare-fun fgt (Float Float) Bool)\n";
+      out << "(declare-fun fadd (Float Float) Float)\n";
+      out << "(declare-fun fsub (Float Float) Float)\n";
+      out << "(declare-fun fmul (Float Float) Float)\n";
+      out << "(declare-fun fdiv (Float Float) Float)\n";
+      out << "(define-fun MinInt () Int " << minint << ")\n";
+      out << "(define-fun MaxInt () Int " << maxint << ")\n";
     }
 }

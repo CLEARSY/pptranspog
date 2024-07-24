@@ -25,5 +25,7 @@ macro(add_pptranstptp_test id)
 endmacro(add_pptranstptp_test)
 
 add_pptranssmt_test(test001)
+add_pptranssmt_test(test002)
 
 add_pptranstptp_test(test001)
+add_pptranstptp_test(test002)

@@ -6,6 +6,7 @@ set(PPTRANSTPTP_HEADERS
         decomposition.h
         ppTransTPTP.h
         ppTransTPTPNonIncr.h
+        theoryTPTP.h
         )
 
 set(PPTRANSTPTP_SOURCES
@@ -14,6 +15,7 @@ set(PPTRANSTPTP_SOURCES
         ppTransTPTP.cpp
         ppTransTPTPNonIncr.cpp
         ppTransConsoleTPTP.cpp
+        theoryTPTP.cpp
         )
 
 include_directories(

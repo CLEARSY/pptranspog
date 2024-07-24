@@ -81,56 +81,50 @@
  :named |ceiling_axiom_2|
 ))
 (declare-fun mem0 (Int (P Int)) Bool)
-(declare-fun sum ((P Int)) Int)
+
+(declare-fun isum ((P Int)) Int)
+
 (assert (!
  (forall ((s (P Int)))
   (=>
    (forall ((x Int)) (not (mem0 x s)))
-   (= (sum s) 0)
+   (= (isum s) 0)
   )
  )
- :named |sum_axiom_1|
-))
+ :named |isum_axiom_1|))
+
 (assert (!
- (forall ((s1 (P Int)) (s2 (P Int)) (e Int) (n Int))
-  (=>
-   (and
-    (= (sum s1) n)
-    (not (mem0 e s1))
-    (forall ((x Int)) (=> (mem0 x s2) (or (= x e) (mem0 x s1))))
-    (forall ((x Int)) (=> (or (= x e) (mem0 x s1)) (mem0 x s2)))
-   )
-   (= (sum s2) (+ n e))
-  )
- )
- :named |sum_axiom_2|
-))
-(declare-fun prod ((P Int)) Int)
+(forall ((x Int) (S (P Int)))
+  (=> (not (mem0 x S))
+      (forall ((T (P Int)))
+        (=> (forall ((y Int)) (= (mem0 y T) (or (= x y) (mem0 y S))))
+            (= (isum T) (+ (isum S) x) )))))
+  :named |isum_axiom_2|))
+
+
+(declare-fun iprod ((P Int)) Int)
+
 (assert (!
  (forall ((s (P Int)))
   (=>
    (forall ((x Int)) (not (mem0 x s)))
-   (= (prod s) 1)
+   (= (iprod s) 1)
   )
  )
- :named |prod_axiom_1|
-))
+ :named |iprod_axiom_1|))
+
 (assert (!
- (forall ((s1 (P Int)) (s2 (P Int)) (e Int) (n Int))
-  (=>
-   (and
-    (= (prod s1) n)
-    (not (mem0 e s1))
-    (forall ((x Int)) (=> (mem0 x s2) (or (= x e) (mem0 x s1))))
-    (forall ((x Int)) (=> (or (= x e) (mem0 x s1)) (mem0 x s2)))
-   )
-   (= (prod s2) (* n e))
-  )
- )
- :named |prod_axiom_2|
-))
+(forall ((x Int) (S (P Int)))
+  (=> (not (mem0 x S))
+      (forall ((T (P Int)))
+        (=> (forall ((y Int)) (= (mem0 y T) (or (= x y) (mem0 y S))))
+            (= (iprod T) (+ (iprod S) x) )))))
+  :named |iprod_axiom_2|))
+
 (declare-fun mem1 (Real (P Real)) Bool)
+
 (declare-fun rsum ((P Real)) Real)
+
 (assert (!
  (forall ((s (P Real)))
   (=>
@@ -138,46 +132,36 @@
    (= (rsum s) 0.0)
   )
  )
- :named |rsum_axiom_1|
-))
+ :named |rsum_axiom_1|))
+
 (assert (!
- (forall ((s1 (P Real)) (s2 (P Real)) (e Real) (n Real))
-  (=>
-   (and
-    (= (rsum s1) n)
-    (not (mem1 e s1))
-    (forall ((x Real)) (=> (mem1 x s2) (or (= x e) (mem1 x s1))))
-    (forall ((x Real)) (=> (or (= x e) (mem1 x s1)) (mem1 x s2)))
-   )
-   (= (rsum s2) (+ n e))
-  )
- )
- :named |rsum_axiom_2|
-))
+(forall ((x Real) (S (P Real)))
+  (=> (not (mem1 x S))
+      (forall ((T (P Real)))
+        (=> (forall ((y Real)) (= (mem1 y T) (or (= x y) (mem1 y S))))
+            (= (rsum T) (+ (rsum S) x) )))))
+  :named |rsum_axiom_2|))
+
+
 (declare-fun rprod ((P Real)) Real)
+
 (assert (!
- (forall ((s (P Real)))
+ (forall ((S (P Real)))
   (=>
-   (forall ((x Real)) (not (mem1 x s)))
-   (= (rprod s) 1.0)
+   (forall ((x Real)) (not (mem1 x S)))
+   (= (rprod S) 1.0)
   )
  )
- :named |rprod_axiom_1|
-))
+ :named |rprod_axiom_1|))
+
 (assert (!
- (forall ((s1 (P Real)) (s2 (P Real)) (e Real) (n Real))
-  (=>
-   (and
-    (= (rprod s1) n)
-    (not (mem1 e s1))
-    (forall ((x Real)) (=> (mem1 x s2) (or (= x e) (mem1 x s1))))
-    (forall ((x Real)) (=> (or (= x e) (mem1 x s1)) (mem1 x s2)))
-   )
-   (= (rprod s2) (* n e))
-  )
- )
- :named |rprod_axiom_2|
-))
+(forall ((x Real) (S (P Real)))
+  (=> (not (mem1 x S))
+      (forall ((T (P Real)))
+        (=> (forall ((y Real)) (= (mem1 y T) (or (= x y) (mem1 y S))))
+            (= (rprod T) (+ (rprod S) x) )))))
+  :named |rprod_axiom_2|))
+
 (declare-fun fle (Float Float) Bool)
 (declare-fun flt (Float Float) Bool)
 (declare-fun fge (Float Float) Bool)

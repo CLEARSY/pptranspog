@@ -57,7 +57,7 @@ then
 fi
 
 # Gets into $comp the base name of the pog file
-pog=`find input/test001/ -name "*pog" -print`
+pog=`find input/${TESTID}/ -name "*pog" -print`
 COMP=`basename $pog .pog`
 
 if [ "$FORMAT" = "SMT" ]

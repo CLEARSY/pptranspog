@@ -1,7 +1,7 @@
 /** ppTrans.cpp
 
    \copyright Copyright © CLEARSY 2023
-   \license This file is part of ppTransSmt.
+   \license This file is part of pptranspog.
 
    ppTransSmt is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by
@@ -14,13 +14,14 @@
     General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with ppTransSmt. If not, see <https://www.gnu.org/licenses/>.
+    along with pptranspog. If not, see <https://www.gnu.org/licenses/>.
 */
 #include "ppTransTPTP.h"
 #include "decomposition.h"
 #include "predDesc.h"
 #include "exprDesc.h"
 #include "exprWriter.h"
+#include "theoryTPTP.h"
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -2525,23 +2526,11 @@ tff(exp_def_2,axiom,(! [X: $int,Y: $int] : (( $greatereq(Y,1))=> exp(X,Y) = $sum
 tff(rexp_type,type,(rexp: ( $real * $int ) > $real )).
 tff(rexp_def_1,axiom,(! [X: $real] : (( X != 0.0)=> rexp(X,0) = 1.0 ) )).
 tff(rexp_def_2,axiom,(! [X: $real,Y: $int] : (( $greatereq(Y,1))=> rexp(X,Y) = $sum(X,rexp(X,$difference(Y,1))) ) )).
-tff(isum_type,type,(isum: set_0 > $int )).
-tff(isum_def_1,axiom,( ! [S: set_0] : (! [X: $int] : (~ mem0(X,S) ) => isum(S) = 0 ))).
-tff(isum_def_2,axiom,( ! [S1: set_0,S2: set_0,E: $int,N: $int] : ( ( isum(S1) = N & ~ mem0(E,S1) & ! [X: $int] : ( mem0(X,S2) => ( X = E | mem0(X,S1) ) ) & ! [X: $int] :  ( mem0(X,S1) => mem0(X,S2) ) ) => isum(S2) = $sum(N,E) ) )).
-tff(rsum_type,type,(rsum: set_1 > $real )).
-tff(rsum_def_1,axiom,(! [S: set_1,X: $real] : ( ( ~ mem1(X,S))=> rsum(S) = 0.0 ) )).
-tff(rsum_def_2,axiom,(! [S1: set_1, S2: set_1,E: $real,N: $real] : ( ( rsum(S1) = N & ~ mem1(E,S1) & ! [X: $real] : ( mem1(X,S2) => ( X = E | mem1(X,S1) ) ) & ! [X: $real] :  ( mem1(X,S1) => mem1(X,S2) ) ) => rsum(S2) = $sum(N,E) ) )).
-tff(iprod_type,type,(iprod: set_0 > $int )).
-tff(iprod_def_1,axiom,(! [S: set_0,X: $int] : ( ( ~ mem0(X,S))=> iprod(S) = 1 ) )).
-tff(iprod_def_2,axiom,( ! [S1: set_0,S2: set_0,E: $int,N: $int] : ( ( iprod(S1) = N & ~ mem0(E,S1) & ! [X: $int] : ( mem0(X,S2) => ( X = E | mem0(X,S1) ) ) & ! [X: $int] : ( ( X = E | mem0(X,S1) ) => mem0(X,S2) ) ) => isum(S2) = $product(N,E) ) )).
-tff(rprod_type,type,(rprod: set_1 > $real )).
-tff(rprod_def_1,axiom,(! [S: set_1,X: $real] : ( ( ~ mem1(X,S))=> rprod(S) = 1.0 ) )).
-tff(rprod_def_2,axiom,(! [S1: set_1,S2: set_1,E: $real,N: $real] : ( ( rprod(S1) = N & ~ mem1(E,S1) & ! [X: $real] : ( mem1(X,S2) => ( X = E | mem1(X,S1) ) ) & ! [X: $real] : ( ( X = E | mem1(X,S1) ) => mem1(X,S2) ) ) => rprod(S2) = $sum(N,E) ) )).
-tff(min_int_type,type,(min_int: $int )).
-tff(max_int_type,type,(max_int: $int )).
+tff(min_int_type,type,(min_int: $int)).
+tff(max_int_type,type,(max_int: $int)).
         )";
-    const string tff_min_int_axiom = "tff(min_int_axiom,axiom,(min_int = $uminus(" + minint + " ))).";
-    const string tff_max_int_axiom = "tff(max_int_axiom,axiom,(max_int =" + maxint+ ")).";
+    const string tff_min_int_axiom = "tff(min_int_axiom,axiom,(min_int = $uminus(" + minint + "))).";
+    const string tff_max_int_axiom = "tff(max_int_axiom,axiom,(max_int =" + maxint + ")).";
 
     out << "%--------------------------------------------------------------------------" << endl
         << "% File     : ." << endl
@@ -2553,6 +2542,7 @@ tff(max_int_type,type,(max_int: $int )).
         << "% Source   : " << endl
         << "%--------------------------------------------------------------------------" << endl
         << prelude << endl
+        << TPTP::isum << TPTP::iprod << TPTP::rsum << TPTP::rprod
         << tff_min_int_axiom << endl
         << tff_max_int_axiom << endl
         << "%--------------------------------------------------------------------------" << endl;

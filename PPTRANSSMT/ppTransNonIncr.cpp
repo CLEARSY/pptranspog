@@ -287,7 +287,7 @@ namespace ppTransNonIncr {
         out << "(check-sat)\n";
         if (model)
             out << "(get-model)\n";
-        out << "(exit)";
+        out << "(exit)" << std::endl;
         out.close();
     }
 

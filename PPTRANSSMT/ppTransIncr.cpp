@@ -145,7 +145,7 @@ namespace ppTransIncr {
             }
             if (pos.size() > 1) out << "(pop 1)\n";
         }
-        out << "(exit)";
+        out << "(exit)" << std::endl;
         out.close();
 
     }

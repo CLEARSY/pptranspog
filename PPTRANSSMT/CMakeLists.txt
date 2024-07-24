@@ -7,6 +7,7 @@ set(PPTRANSSMT_HEADERS
     ppTrans.h
     ppTransIncr.h
     ppTransNonIncr.h
+    theorySMTLIB.h
     )
 
 set(PPTRANSSMT_SOURCES
@@ -16,6 +17,7 @@ set(PPTRANSSMT_SOURCES
     ppTransIncr.cpp
     ppTransNonIncr.cpp
     ppTransSmt.cpp
+    theorySMTLIB.cpp
     )
 
 include_directories(
