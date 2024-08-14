@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+title: pptranspog
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - name: CLEARSY
+repository-code: 'https://github.com/CLEARSY/pptranspog'
+abstract: >
+  Tool translating proof obligations from the POG format to
+  SMT-LIB 2.6 based on the pptrans approach. or to TPTP
+  format based on the pptrans approach.
+license: GPL-3.0
