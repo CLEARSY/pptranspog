@@ -41,6 +41,7 @@ using std::string;
      * @param rp number of rp steps to apply
      * @param dd indicates if dd command applies
      * @param model indicates if a model has to be queried
+     * @param allPreludeOptions bypasses prelude simplification
      * @param minint
      * @param maxint
      */
@@ -64,6 +65,7 @@ extern void saveSmtLibFileNonIncrOne(
      * @param rp
      * @param dd
      * @param model
+     * @param allPreludeOptions bypasses prelude simplification
      * @param minint
      * @param maxint
      */

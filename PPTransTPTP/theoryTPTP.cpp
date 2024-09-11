@@ -23,6 +23,36 @@ using std::string;
 namespace TPTP
 {
 
+const string setInt = R"_(
+tff(set_0_type,type,(set_0: $tType )).
+tff(mem0_type,type,(mem0: ( $int * set_0 ) > $o )).
+)_";
+
+const string setReal = R"_(
+tff(set_1_type,type,(set_1: $tType )).
+tff(mem1_type,type,(mem1: ( $real * set_1 ) > $o )).
+)_";
+
+const string divB = R"_(
+tff(b_division_type,type,(divB: ( $int * $int ) > $int )).
+tff(b_division_def_1,axiom,(! [X: $int,Y: $int] : (( $lesseq(0,X)& $less(0,Y))=> divB(X,Y) = $quotient_f(X,Y)))).
+tff(b_division_def_2,axiom,(! [X: $int,Y: $int] : (( $lesseq(X,0)& $less(0,Y))=> divB(X,Y) = $uminus($quotient_f($uminus(X),Y)) ) )).
+tff(b_division_def_3,axiom,(! [X: $int,Y: $int] : (( $lesseq(0,X)& $less(Y,0))=> divB(X,Y) = $quotient_f(X,Y)))).
+tff(b_division_def_4,axiom,(! [X: $int,Y: $int] : (( $lesseq(X,0)& $less(Y,0))=> divB(X,Y) = $quotient_f($uminus(X),$uminus(Y)) ) )).
+)_";
+
+const string iexp = R"_(
+tff(iexp_type,type,(iexp: ( $int * $int ) > $int )).
+tff(iexp_def_1,axiom,(! [X: $int] : ( iexp(X,0) = 1 ) )).
+tff(iexp_def_2,axiom,(! [X: $int,Y: $int] : (( $greatereq(Y,1))=> iexp(X,Y) = $sum(X,iexp(X,$difference(Y,1))) ) )).
+)_";
+
+const string rexp = R"_(
+tff(rexp_type,type,(rexp: ( $real * $int ) > $real )).
+tff(rexp_def_1,axiom,(! [X: $real] : (( X != 0.0)=> rexp(X,0) = 1.0 ) )).
+tff(rexp_def_2,axiom,(! [X: $real,Y: $int] : (( $greatereq(Y,1))=> rexp(X,Y) = $sum(X,rexp(X,$difference(Y,1))) ) )).
+)_";
+
 const string isum = R"_(
 tff(isum_type,type,(isum: set_0 > $int )).
 tff(isum_def_1,axiom,
@@ -118,5 +148,4 @@ tff(rprod_def_2,axiom,
   )
 ).
 )_";
-
 } // namespace TPTP

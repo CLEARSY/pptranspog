@@ -26,6 +26,7 @@
 #include "pog.h"
 #include "vars.h"
 #include "expr.h"
+#include "optionPrelude.h"
 
 // TODO: Should eventually be deleted
 class ppTransException : public std::exception
@@ -67,7 +68,7 @@ namespace ppTransTPTP {
     };
     void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::set<std::string> &used_ids);
     void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,std::set<std::string> &used_ids);
-    void printPrelude ( std::ofstream &out, const std::string &minint, const std::string &maxint );
+    void printPrelude ( std::ofstream &out, const OptionPrelude options, const std::string &minint, const std::string &maxint );
 }
 
 #endif // PPTRANSTPTP_H

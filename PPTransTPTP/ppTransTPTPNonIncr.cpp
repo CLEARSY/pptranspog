@@ -127,6 +127,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const std::string &filename,
             const std::string &minint,
             const std::string &maxint) {
@@ -264,7 +265,7 @@ namespace ppTransNonIncr {
         out << "% PO " << group_nb << " " << goal_nb << endl;
         out << "% Group " << group.tag << endl;
         out << "% Tag " << sg.tag << endl;
-        ppTransTPTP::printPrelude(out, minint, maxint);
+        ppTransTPTP::printPrelude(out, OptionPrelude(pog, allPreludeOptions), minint, maxint);
         out << "% Global declarations" << endl;
         for (auto &s: used_ids) {
             if (s != "mem0" && s != "mem1" && s != "set_0" && s != "set_1")
@@ -273,7 +274,11 @@ namespace ppTransNonIncr {
         out << "% Defines" << endl;
         int counter = 0;
         for (auto &d: defines_tr) {
+          static const string B_definitions_label = "B definitions";
+          static const size_t len = B_definitions_label.size();
+          if (0 != d.first.compare(0, len, B_definitions_label)) {
             out << "tff('Define:" << d.first << "', axiom, " << d.second << ")." << endl << endl;
+          }
         }
         out << "%Global hypotheses" << endl;
         counter = 0;
@@ -298,6 +303,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const string &minint,
             const string &maxint) {
         std::map<std::pair<std::string, int>, translation_t> definitionHyps_tr;
@@ -308,7 +314,7 @@ namespace ppTransNonIncr {
         decomp::decompose(pog);
         std::string absolutefilename{utils::absoluteFilePath(filename)};
         saveTPTPFileNonIncr(pog, env, definitionHyps_tr, definitionSets_tr,
-                            globalHyps_tr, localHyps_tr, groupIdx, goalIdx, rp, dd, model,
+                            globalHyps_tr, localHyps_tr, groupIdx, goalIdx, rp, dd, model, allPreludeOptions,
                             absolutefilename, minint, maxint);
     }
 
@@ -318,6 +324,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const std::string &minint,
             const std::string &maxint) {
         using std::to_string;
@@ -333,7 +340,7 @@ namespace ppTransNonIncr {
             for (size_t po_nb = 0; po_nb < pog.pos[group_nb].simpleGoals.size(); po_nb++) {
                 std::string path{prefix + "-" + to_string(group_nb) + "-" + to_string(po_nb) + ".tptp"};
                 saveTPTPFileNonIncr(pog, env, definitionHyps_tr, definitionSets_tr,
-                                    globalHyps_tr, localHyps_tr, group_nb, po_nb, rp, dd, model,
+                                    globalHyps_tr, localHyps_tr, group_nb, po_nb, rp, dd, model, allPreludeOptions,
                                     path, minint, maxint);
             }
         }

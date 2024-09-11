@@ -42,6 +42,7 @@ if(PROJECT_IS_TOP_LEVEL)
 endif()
 
 add_subdirectory(POGLoader)
+add_subdirectory(PPTRANS)
 add_subdirectory(PPTRANSSMT)
 add_subdirectory(PPTransTPTP)
 

@@ -4,16 +4,25 @@ Tool translating proof obligations from the POG format
 to SMT-LIB 2.6 based on the pptrans approach.
 or to TPTP format based on the pptrans approach.
 
+Dependencies:
+
 * BAST: a C++ library to represent B Abstract Syntax Trees. Depends on Qt5Core, Qt5Xml.
+
+Modules:
 
 * POGLoader: a C++ library to load POG files to memory, using the BAST
   representation. Depends on BAST, Qt5Core, Qt5Xml.
+
+* PPTRANS: an internal C++ library containing code that is common to the SMT and TPTP
+  encoder programs. It essentially contains the preprocessing code and some utility functions.
 
 * PPTRANSSMT: a C++ program to translate POG files to SMTLIB-2.6
   format, based on an extension of the pptrans encoding described in the paper [Integrating SMT solvers in Rodin](http://dx.doi.org/10.3233/SAT190123).
 
 * PPTRANSTPTP: a C++ program to translate POG files to TPTP (tff)
   format, in a similar way to the SMTLIB-2.6 translation.
+
+* test: Test infrastructure. It still needs to be filled with actual tests.
 
 ## COMPILING
 
@@ -48,7 +57,7 @@ BAST library before that of this project.
 
 Alternatively, you can use one of the following scripts in the `Scripts` folder:
 
-* `translate.sh` : wrapper around `pptranstptp` that takes as input a POG file and outputs a TPTP file.  
+* `translate.sh` : wrapper around `pptranstptp` that takes as input a POG file and outputs a TPTP file.
 
 * `comparison.sh` takes as input a folder of POG files and uses both `pptranstptp` and `pptranssmt` to generate TPTP and SMTLIB files respectively. It then uses the `vampire` and `z3` solvers to check the validity of the generated files. The results are saved in a CSV file. The script requires the `vampire` and `z3` solvers to be installed and available in the `PATH` environment variable.
 

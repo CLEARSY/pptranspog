@@ -60,6 +60,8 @@ static void display_help()
          << "\t\t-ddrp R" << endl
          << "\t\t\tApplies dd and selects hypothesis that belong to rp(N)" << endl
          << "\t\t\t\tNon-incremental mode and default mode with a single selected goal." << endl
+         << "\t\t-c" << endl
+         << "\t\t\tConsider that all options are needed in the prelude."
          << "\t\t-h" << endl
          << "\t\t\tPrints help." << endl
          << "More information about TPTP format can be found at http://www.cs.miami.edu/~tptp/" << endl;
@@ -73,6 +75,7 @@ int main(int argc, char **argv)
     std::string output;
     vector<pair<int, int> > goals;
     bool model = false;
+    bool allPreludeOptions = false;
     int rp = -1;
     bool dd = false;
 
@@ -107,6 +110,9 @@ int main(int argc, char **argv)
             arg += 1;
         } else if (strcmp(argv[arg], "-m") == 0) {
             model = true;
+            arg += 1;
+        } else if (strcmp(argv[arg], "-c") == 0) {
+            allPreludeOptions = true;
             arg += 1;
         } else if (strcmp(argv[arg], "-rp") == 0) {
             if (arg+1 < argc){
@@ -160,12 +166,12 @@ int main(int argc, char **argv)
         }
         const int groupId { goals[0].first };
         const int goalId { goals[0].second };
-        ppTransNonIncr::saveTPTPFileNonIncrOne(pog, output, groupId, goalId, rp, dd, model);
+        ppTransNonIncr::saveTPTPFileNonIncrOne(pog, output, groupId, goalId, rp, dd, model, allPreludeOptions);
     }
     /* ppTransTPTP is used as a command-line tool,
      * e.g. to produced benchmarks. */
     else {
-        ppTransNonIncr::saveTPTPFileNonIncr(pog, output, rp, dd, model);
+        ppTransNonIncr::saveTPTPFileNonIncr(pog, output, rp, dd, model, allPreludeOptions);
     }
     return EXIT_SUCCESS;
 }

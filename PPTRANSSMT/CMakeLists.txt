@@ -2,8 +2,6 @@ project(PPTRANSSMT)
 set(CMAKE_CXX_STANDARD 17)
 
 set(PPTRANSSMT_HEADERS
-    utils.h
-    decomposition.h
     ppTrans.h
     ppTransIncr.h
     ppTransNonIncr.h
@@ -11,8 +9,6 @@ set(PPTRANSSMT_HEADERS
     )
 
 set(PPTRANSSMT_SOURCES
-    utils.cpp
-    decomposition.cpp
     ppTrans.cpp
     ppTransIncr.cpp
     ppTransNonIncr.cpp
@@ -24,10 +20,13 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     ${BASTLIB_SOURCE_DIR}
     ${POGLoader_SOURCE_DIR}
+    ${PPTRANS_SOURCE_DIR}
     )
 
-add_executable(ppTransSmt ${PPTRANSSMT_HEADERS} ${PPTRANSSMT_SOURCES})
+add_executable(ppTransSmt
+${PPTRANSSMT_HEADERS} ${PPTRANSSMT_SOURCES}
+)
 
 target_link_libraries(ppTransSmt
-    -Bstatic POGLoader_LIB BAST_LIB
+    -Bstatic POGLoader_LIB BAST_LIB PPTRANS_LIB
     -Bdynamic Qt5::Core Qt5::Xml)

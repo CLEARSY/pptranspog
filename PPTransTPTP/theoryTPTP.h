@@ -21,16 +21,18 @@
 #ifndef THEORY_TPTP_H
 #define THEORY_TPTP_H
 
+/**@brief Axiomatization of some B operators in TPTP */
 namespace TPTP
 {
-
-/**@todo extract all theory bits from ppTrans.cpp:printPrelude() here */
-
-extern const std::string isum;
-extern const std::string iprod;
-extern const std::string rsum;
-extern const std::string rprod;
-
+extern const std::string setInt; /**@brief type and function declaration for set of INTEGER values */
+extern const std::string setReal; /**@brief type and function declaration for set of REAL values*/
+extern const std::string divB; /**@brief axiomatization for integer division */
+extern const std::string iexp; /**@brief axiomatization for integer exponentiation */
+extern const std::string rexp; /**@brief axiomatization for exponentiation of real numbers */
+extern const std::string isum; /**@brief axiomatization for addition over a set of integers */
+extern const std::string iprod; /**@brief axiomatization for multiplication over a set of integers */
+extern const std::string rsum; /**@brief axiomatization for addition over a set of real numbers */
+extern const std::string rprod; /**@brief axiomatization for multiplication over a set of real numbers */
 } // namespace TPTP
 
 #endif // THEORY_TPTP_H
