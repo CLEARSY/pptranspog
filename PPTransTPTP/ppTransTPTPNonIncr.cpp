@@ -21,6 +21,7 @@
 #include "decomposition.h"
 #include "utils.h"
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -28,9 +29,12 @@ using namespace std;
 
 namespace ppTransNonIncr {
 
-    static void merge(std::set<std::string> &set, const std::set<std::string> &to_insert) {
-        for (auto &e: to_insert)
-            set.insert(e);
+    static void merge(std::vector<std::string> &s, const std::vector<std::string> &to_insert) {
+        for (auto &e: to_insert) {
+            if (find(s.begin(), s.end(), e) == s.end()) {
+                s.push_back(e);
+            }
+        }
     }
 
     static void merge(std::set<VarName> &set, const std::set<VarName> &to_insert) {
@@ -87,7 +91,7 @@ namespace ppTransNonIncr {
         return pos;
     }
 
-    using translation_t = std::pair<std::string, std::set<std::string>>;
+    using translation_t = std::pair<std::string, std::vector<std::string>>;
 
     static void updateRpVars(
             std::set<VarName> &rpVars,
@@ -168,7 +172,7 @@ namespace ppTransNonIncr {
             }
         }
 
-        std::set<std::string> used_ids;
+        std::vector<std::string> used_ids;
 
         // definitions
         std::map<std::string, std::string> defines_tr; // name -> translation
@@ -186,7 +190,7 @@ namespace ppTransNonIncr {
                             merge(used_ids, it->second.second);
                             tr = it->second.first;
                         } else {
-                            std::set<std::string> used_ids2;
+                            std::vector<std::string> used_ids2;
                             std::ostringstream str;
                             ppTransTPTP::ppTrans(str, env, hyp, used_ids2);
                             definitionHyps_tr[{def_name, j}] = {str.str(), used_ids2};
@@ -202,7 +206,7 @@ namespace ppTransNonIncr {
                             merge(used_ids, it->second.second);
                             tr = it->second.first;
                         } else {
-                            std::set<std::string> used_ids2;
+                            std::vector<std::string> used_ids2;
                             std::ostringstream str;
                             ppTransTPTP::ppTrans(str, env, set, used_ids2);
                             definitionSets_tr[{def_name, j}] = {str.str(), used_ids2};
@@ -226,7 +230,7 @@ namespace ppTransNonIncr {
                     merge(used_ids, it->second.second);
                     globalHyps.push_back(it->second.first);
                 } else {
-                    std::set<std::string> used_ids2;
+                    std::vector<std::string> used_ids2;
                     std::ostringstream str;
                     ppTransTPTP::ppTrans(str, env, hyp, used_ids2);
                     globalHyps_tr[ref] = {str.str(), used_ids2};
@@ -245,7 +249,7 @@ namespace ppTransNonIncr {
                     merge(used_ids, it->second.second);
                     localHyps.push_back(std::make_pair(ref-1, it->second.first));
                 } else {
-                    std::set<std::string> used_ids2;
+                    std::vector<std::string> used_ids2;
                     std::ostringstream str;
                     ppTransTPTP::ppTrans(str, env, group.localHyps[ref - 1], used_ids2);
                     localHyps_tr[ref] = {str.str(), used_ids2};

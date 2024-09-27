@@ -20,7 +20,6 @@
 #define PPTRANSTPTP_H
 
 #include<map>
-#include<set>
 #include<vector>
 #include <sstream>
 #include "pog.h"
@@ -45,29 +44,34 @@ namespace ppTransTPTP {
         public:
             void pop_vars();
             void push_vars(const std::vector<TypedVar> &vars);
-            std::string registerId(const VarName &v, const BType &ty, std::set<std::string> &used_ids);
-            std::string registerMem(const BType &ty, std::set<std::string> &used_ids);
-            std::string registerIterate(const BType &ty, std::set<std::string> &used_ids);
-            std::string registerRecordType(const BType &ty, std::set<std::string> &used_ids);
-            std::string registerStringLiteral(const std::string &s, std::set<std::string> &used_ids);
-            std::string registerSetType(const BType &ty, std::set<std::string> &used_ids);
-            std::string registerProductType(const BType &ty, std::set<std::string> &used_ids);
+            std::string registerId(const VarName &v, const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerMem(const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerIterate(const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerRecordType(const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerStringLiteral(const std::string &s, std::vector<std::string> &used_ids);
+            std::string registerSetType(const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerProductType(const BType &ty, std::vector<std::string> &used_ids);
 
-        std::string nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, std::set<std::string> &used_ids);
+        std::string nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, std::vector<std::string> &used_ids);
             const std::map<std::string,std::string> &getTPTPDeclarations() const { return tptpDeclarations; } ;
         private:
             std::map<BType,std::string> memberships = { {BType::POW_INT,"mem0"}, {BType::POW_REAL,"mem1"} };
-            std::map<BType,std::string> recordTypes;
-            std::map<BType,std::string> setTypes = { {BType::INT, "set_0"}, {BType::REAL,"set_1"} };;
+            std::map<BType, std::string> types = { {BType::INT, "set_0"}, {BType::REAL,"set_1"} };
+            unsigned setTypeCount = 2;
+            unsigned recordTypeCount = 0;
+            unsigned productTypeCount = 0;
+            std::map<BType, std::string> recordTypes;
+            std::map<BType,std::string> setTypes = { {BType::INT, "set_0"}, {BType::REAL,"set_1"} };
             std::map<BType,std::string> productTypes;
             std::map<BType,std::string> iterates;
             std::map<std::string,std::string> stringLiterals;
             std::map<TypedVar,std::string> globalIdents;
             std::vector<std::vector<TypedVar> > bv_stack;
             std::map<std::string,std::string> tptpDeclarations = {};
+            void registerId(const std::string& id);
     };
-    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::set<std::string> &used_ids);
-    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,std::set<std::string> &used_ids);
+    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::vector<std::string> &used_ids);
+    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,std::vector<std::string> &used_ids);
     void printPrelude ( std::ofstream &out, const OptionPrelude options, const std::string &minint, const std::string &maxint );
 }
 

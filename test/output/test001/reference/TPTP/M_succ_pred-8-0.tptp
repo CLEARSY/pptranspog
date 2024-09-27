@@ -19,8 +19,8 @@ tff(min_int_axiom,axiom,(min_int = $uminus(2147483648))).
 tff(max_int_axiom,axiom,(max_int = 2147483647)).
 %--------------------------------------------------------------------------
 % Global declarations
-tff(g_c1_1_type, type, g_c1_1 : $int).
 tff(g_s1_0_type, type, g_s1_0 : set_0).
+tff(g_c1_1_type, type, g_c1_1 : $int).
 % Defines
 tff('Define:lprp:0', axiom, $true).
 
