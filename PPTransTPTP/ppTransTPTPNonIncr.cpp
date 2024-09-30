@@ -29,14 +29,6 @@ using namespace std;
 
 namespace ppTransNonIncr {
 
-    static void merge(std::vector<std::string> &s, const std::vector<std::string> &to_insert) {
-        for (auto &e: to_insert) {
-            if (find(s.begin(), s.end(), e) == s.end()) {
-                s.push_back(e);
-            }
-        }
-    }
-
     static void merge(std::set<VarName> &set, const std::set<VarName> &to_insert) {
         for (auto &e: to_insert)
             set.insert(e);
@@ -91,7 +83,7 @@ namespace ppTransNonIncr {
         return pos;
     }
 
-    using translation_t = std::pair<std::string, std::vector<std::string>>;
+    using translation_t = std::pair<std::string, ppTransTPTP::lexicon_t>;
 
     static void updateRpVars(
             std::set<VarName> &rpVars,
@@ -172,7 +164,7 @@ namespace ppTransNonIncr {
             }
         }
 
-        std::vector<std::string> used_ids;
+        ppTransTPTP::lexicon_t used_ids;
 
         // definitions
         std::map<std::string, std::string> defines_tr; // name -> translation
@@ -187,14 +179,15 @@ namespace ppTransNonIncr {
                     if (rp < 0 || keepHyp(rpVars, hyp)) {
                         auto it = definitionHyps_tr.find({def_name, j});
                         if (it != definitionHyps_tr.end()) {
-                            merge(used_ids, it->second.second);
+                            used_ids.merge(it->second.second);
                             tr = it->second.first;
                         } else {
-                            std::vector<std::string> used_ids2;
+                            ppTransTPTP::lexicon_t used_ids2;
                             std::ostringstream str;
+
                             ppTransTPTP::ppTrans(str, env, hyp, used_ids2);
                             definitionHyps_tr[{def_name, j}] = {str.str(), used_ids2};
-                            merge(used_ids, used_ids2);
+                            used_ids.merge(used_ids2);
                             tr = str.str();
                         }
                     }
@@ -203,14 +196,14 @@ namespace ppTransNonIncr {
                     if (rp < 0 || keepHyp(rpVars, set)) {
                         auto it = definitionSets_tr.find({def_name, j});
                         if (it != definitionSets_tr.end()) {
-                            merge(used_ids, it->second.second);
+                            used_ids.merge(it->second.second);
                             tr = it->second.first;
                         } else {
-                            std::vector<std::string> used_ids2;
+                            ppTransTPTP::lexicon_t used_ids2;
                             std::ostringstream str;
                             ppTransTPTP::ppTrans(str, env, set, used_ids2);
                             definitionSets_tr[{def_name, j}] = {str.str(), used_ids2};
-                            merge(used_ids, used_ids2);
+                            used_ids.merge(used_ids2);
                             tr = str.str();
                         }
                     }
@@ -227,14 +220,14 @@ namespace ppTransNonIncr {
             if (rp < 0 || keepHyp(rpVars, hyp)) {
                 auto it = globalHyps_tr.find(ref);
                 if (it != globalHyps_tr.end()) {
-                    merge(used_ids, it->second.second);
+                    used_ids.merge(it->second.second);
                     globalHyps.push_back(it->second.first);
                 } else {
-                    std::vector<std::string> used_ids2;
+                    ppTransTPTP::lexicon_t used_ids2;
                     std::ostringstream str;
                     ppTransTPTP::ppTrans(str, env, hyp, used_ids2);
                     globalHyps_tr[ref] = {str.str(), used_ids2};
-                    merge(used_ids, used_ids2);
+                    used_ids.merge(used_ids2);
                     globalHyps.push_back(str.str());
                 }
             }
@@ -246,14 +239,14 @@ namespace ppTransNonIncr {
             if (rp < 0 || !dd || keepHyp(rpVars, group.localHyps[ref - 1])) {
                 auto it = localHyps_tr.find(ref);
                 if (it != localHyps_tr.end()) {
-                    merge(used_ids, it->second.second);
+                    used_ids.merge(it->second.second);
                     localHyps.push_back(std::make_pair(ref-1, it->second.first));
                 } else {
-                    std::vector<std::string> used_ids2;
+                    ppTransTPTP::lexicon_t used_ids2;
                     std::ostringstream str;
                     ppTransTPTP::ppTrans(str, env, group.localHyps[ref - 1], used_ids2);
                     localHyps_tr[ref] = {str.str(), used_ids2};
-                    merge(used_ids, used_ids2);
+                    used_ids.merge(used_ids2);
                     localHyps.push_back(std::make_pair(ref-1, str.str()));
                 }
             }
@@ -271,7 +264,7 @@ namespace ppTransNonIncr {
         out << "% Tag " << sg.tag << endl;
         ppTransTPTP::printPrelude(out, OptionPrelude(pog, allPreludeOptions), minint, maxint);
         out << "% Global declarations" << endl;
-        for (auto &s: used_ids) {
+        for (auto &s: used_ids.order) {
             if (s != "mem0" && s != "mem1" && s != "set_0" && s != "set_1")
                 out << env.getTPTPDeclarations().find(s)->second << endl;
         }

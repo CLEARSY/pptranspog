@@ -20,8 +20,10 @@
 #define PPTRANSTPTP_H
 
 #include<map>
+#include<set>
 #include<vector>
 #include <sstream>
+#include <string>
 #include "pog.h"
 #include "vars.h"
 #include "expr.h"
@@ -39,20 +41,40 @@ private:
 };
 
 namespace ppTransTPTP {
+    typedef struct lexicon_t {
+      std::vector<std::string> order;
+      std::set<std::string> contents;
+      lexicon_t() : order(), contents() {}
+      bool insert(const std::string &symbol) {
+        if (contents.find(symbol) == contents.end()) {
+          order.push_back(symbol);
+          contents.insert(symbol);
+          return true;
+        }
+        return false;
+      }
+      void merge(const lexicon_t &other) {
+        for (auto &e: other.order) {
+          insert(e);
+        }
+    }
+
+
+    } lexicon_t;
     class LocalEquations;
     class Context {
         public:
             void pop_vars();
             void push_vars(const std::vector<TypedVar> &vars);
-            std::string registerId(const VarName &v, const BType &ty, std::vector<std::string> &used_ids);
-            std::string registerMem(const BType &ty, std::vector<std::string> &used_ids);
-            std::string registerIterate(const BType &ty, std::vector<std::string> &used_ids);
-            std::string registerRecordType(const BType &ty, std::vector<std::string> &used_ids);
-            std::string registerStringLiteral(const std::string &s, std::vector<std::string> &used_ids);
-            std::string registerSetType(const BType &ty, std::vector<std::string> &used_ids);
-            std::string registerProductType(const BType &ty, std::vector<std::string> &used_ids);
+            std::string registerId(const VarName &v, const BType &ty, lexicon_t &used_ids);
+            std::string registerMem(const BType &ty, lexicon_t &used_ids);
+            std::string registerIterate(const BType &ty, lexicon_t &used_ids);
+            std::string registerRecordType(const BType &ty, lexicon_t &used_ids);
+            std::string registerStringLiteral(const std::string &s, lexicon_t &used_ids);
+            std::string registerSetType(const BType &ty, lexicon_t &used_ids);
+            std::string registerProductType(const BType &ty, lexicon_t &used_ids);
 
-        std::string nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, std::vector<std::string> &used_ids);
+        std::string nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, lexicon_t &used_ids);
             const std::map<std::string,std::string> &getTPTPDeclarations() const { return tptpDeclarations; } ;
         private:
             std::map<BType,std::string> memberships = { {BType::POW_INT,"mem0"}, {BType::POW_REAL,"mem1"} };
@@ -70,8 +92,8 @@ namespace ppTransTPTP {
             std::map<std::string,std::string> tptpDeclarations = {};
             void registerId(const std::string& id);
     };
-    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::vector<std::string> &used_ids);
-    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,std::vector<std::string> &used_ids);
+    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, lexicon_t &used_ids);
+    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,lexicon_t &used_ids);
     void printPrelude ( std::ofstream &out, const OptionPrelude options, const std::string &minint, const std::string &maxint );
 }
 

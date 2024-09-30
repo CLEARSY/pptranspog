@@ -100,13 +100,13 @@ namespace ppTransTPTP {
         }
     }
 
-    std::string ppTrans(Context &ctx, const BType &ty, std::vector<std::string> &used_ids);
+    std::string ppTrans(Context &ctx, const BType &ty, lexicon_t &used_ids);
 
     void
-    ppTrans(std::ostringstream &str, Context &ctx, LocalEquations &eqs, const Expr &e, std::vector<std::string> &used_ids);
+    ppTrans(std::ostringstream &str, Context &ctx, LocalEquations &eqs, const Expr &e, lexicon_t &used_ids);
 
 
-    void toTypeList(std::ostringstream &str, Context &ctx, const BType &ty, std::vector<std::string> &used_ids);
+    void toTypeList(std::ostringstream &str, Context &ctx, const BType &ty, lexicon_t &used_ids);
 
     void Context::pop_vars() {
         assert(!bv_stack.empty());
@@ -135,7 +135,7 @@ namespace ppTransTPTP {
     }
 
     void translateBinOp(std::ostringstream &str, std::string operatorText, Context &ctx, LocalEquations &eqs,
-                        const Expr::BinaryExpr &e, std::vector<std::string> &used_ids) {
+                        const Expr::BinaryExpr &e, lexicon_t &used_ids) {
         str << operatorText << "(";
         ppTrans(str, ctx, eqs, e.lhs, used_ids);
         str << ", ";
@@ -143,7 +143,7 @@ namespace ppTransTPTP {
         str << ")";
     }
 
-    std::string Context::registerId(const VarName &v, const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerId(const VarName &v, const BType &ty, lexicon_t &used_ids) {
         if (v.kind() == VarName::Kind::Tmp)
             return localVarNameToString(v);
 
@@ -157,13 +157,11 @@ namespace ppTransTPTP {
                 // Define a new variable of type name
                 std::string type_name = ppTrans(*this, ty, used_ids);
                 tptpDeclarations[res] = "tff(" + res + "_type, type, " + res + " : " + type_name + ").";
-                used_ids.push_back(res);
+                used_ids.insert(res);
             } else {
                 std::string not_used = ppTrans(*this, ty, used_ids); // necessary to update used_ids
                 res = it->second;
-                if (std::find(used_ids.begin(), used_ids.end(), res) == used_ids.end()) {
-                  used_ids.push_back(res);
-                }
+                used_ids.insert(res);
             }
             return res;
         } else {
@@ -172,39 +170,42 @@ namespace ppTransTPTP {
     }
 
     // Function to Instantiate the membership operator for a given Powerset Type
-    std::string Context::registerMem(const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerMem(const BType &ty, lexicon_t &used_ids) {
         assert(ty.getKind() == BType::Kind::PowerType);
         auto it = memberships.find(ty);
         std::string res;
         if (it != memberships.end()) {
             res = it->second;
+            used_ids.insert(res);
         } else {
-            res = "mem" + std::to_string(memberships.size());
-            memberships[ty] = res;
-            auto setType = types.find(ty.toPowerType().content);
-            if (setType == types.end()){
-                // The set type is not yet defined so we define it - before the membership operator
-                // TPTP requires definitions to be before the use
-                this->registerSetType(ty.toPowerType().content, used_ids);
-                setType = types.find(ty.toPowerType().content);
-            }
+          res = "mem" + std::to_string(memberships.size());
+          memberships[ty] = res;
+          auto setType = types.find(ty.toPowerType().content);
+          if (setType == types.end()) {
+            // The set type is not yet defined so we define it - before the
+            // membership operator TPTP requires definitions to be before the
+            // use
+            this->registerSetType(ty.toPowerType().content, used_ids);
+            setType = types.find(ty.toPowerType().content);
+          }
 
-            std::ostringstream str;
-            str << "tff(" << res << "_type, type, " << res << " : (";
-            toTypeList(str,*this,ty.toPowerType().content,used_ids);
-            str << setType->second << ") > $o).";
-            tptpDeclarations[res] = str.str();
-            used_ids.push_back(res);
+          std::ostringstream str;
+          str << "tff(" << res << "_type, type, " << res << " : (";
+          toTypeList(str, *this, ty.toPowerType().content, used_ids);
+          str << setType->second << ") > $o).";
+          tptpDeclarations[res] = str.str();
+          used_ids.insert(res);
         }
         return res;
     }
 
     // Function to Instantiate the membership operator for the Iteration Function
-    std::string Context::registerIterate(const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerIterate(const BType &ty, lexicon_t &used_ids) {
         auto it = iterates.find(ty);
         std::string res;
         if (it != iterates.end()) {
             res = it->second;
+            used_ids.insert(res);
         } else {
             // The type of the iterate function is (P (P A) -> P A)
             res = "mem_it" + std::to_string(iterates.size());
@@ -281,33 +282,35 @@ namespace ppTransTPTP {
             axiom4 << "\t\t\t => " << res << "(X, Y, F,  N)))))." << std::endl;
 
             tptpDeclarations[res] = axiom1.str() + axiom2.str() + axiom3.str() + axiom4.str();
-            used_ids.push_back(res);
+            used_ids.insert(res);
         }
         return res;
     }
 
-    std::string Context::registerStringLiteral(const std::string &s, std::vector<std::string> &used_ids) {
+    std::string Context::registerStringLiteral(const std::string &s, lexicon_t &used_ids) {
         auto it = stringLiterals.find(s);
         std::string res;
         if (it != stringLiterals.end()) {
             res = it->second;
+            used_ids.insert(res);
         } else {
             res = "str" + std::to_string(stringLiterals.size());
             stringLiterals[s] = res;
             std::string tptp_type = "tff(" + res + "_type, type, " + res + ": String).";
             std::string tptp_axiom = "tff(" + res + "_def, axiom, " + res + " = " + s + ").";
             tptpDeclarations[res] = tptp_type + "\n" + tptp_axiom;
-            used_ids.push_back(res);
+            used_ids.insert(res);
         }
         return res;
     }
 
-    std::string Context::registerSetType(const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerSetType(const BType &ty, lexicon_t &used_ids) {
         auto it = types.find(ty);
         std::string res;
         if (it != types.end()) {
             // Set is already declared
             res = it->second;
+            used_ids.insert(res);
         } else {
             res = "set_" + std::to_string(setTypeCount);
             setTypeCount += 1;
@@ -320,17 +323,18 @@ namespace ppTransTPTP {
                     "tff(" + res + "_insert, type, " + res + "_insert : " + typeName + " > " + res
                     + ").";
             tptpDeclarations[res] = tptp_type + "\n" + tptp_empty + "\n" + tptp_insert;
-            used_ids.push_back(res);
+            used_ids.insert(res);
         }
         return res;
     }
 
-    std::string Context::registerProductType(const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerProductType(const BType &ty, lexicon_t &used_ids) {
         auto it = types.find(ty);
         std::string res;
         if (it != types.end()) {
             // Product is already declared
             res = it->second;
+            used_ids.insert(res);
         } else {
             res = "prod_" + std::to_string(productTypeCount);
             // Remember set
@@ -349,17 +353,18 @@ namespace ppTransTPTP {
                     + ").";
 
             tptpDeclarations[res] = tptp_type + "\n" + tptp_empty + "\n" + tptp_insert + "\n" + tptp_in;
-            used_ids.push_back(res);
+            used_ids.insert(res);
         }
         return res;
     }
 
-    std::string Context::registerRecordType(const BType &ty, std::vector<std::string> &used_ids) {
+    std::string Context::registerRecordType(const BType &ty, lexicon_t &used_ids) {
         assert(ty.getKind() == BType::Kind::Struct);
         auto it = types.find(ty);
         std::string res;
         if (it != types.end()) {
             res = it->second;
+            used_ids.insert(res);
         } else {
             // Records are represented as tuples
             res = "S" + std::to_string(recordTypeCount);
@@ -367,13 +372,13 @@ namespace ppTransTPTP {
             types[ty] = res;
             tptpDeclarations[res] =
                     "tff(" + res + "_def, type, [" + std::to_string(ty.toRecordType().fields.size()) + "]).";
-            used_ids.push_back(res);
+            used_ids.insert(res);
         }
         return res;
     }
 
     std::string
-    Context::nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, std::vector<std::string> &used_ids) {
+    Context::nameSimpleExpression(const Expr &e, LocalEquations &local_eqs, lexicon_t &used_ids) {
         assert(e.getType().getKind() != BType::Kind::ProductType);
         assert(e.getType().getKind() != BType::Kind::Struct);
         if (e.getTag() == Expr::EKind::Id) {
@@ -387,7 +392,7 @@ namespace ppTransTPTP {
     }
 
     // Translate a BType to an TPTP type
-    std::string ppTrans(Context &ctx, const BType &ty, std::vector<std::string> &used_ids) {
+    std::string ppTrans(Context &ctx, const BType &ty, lexicon_t &used_ids) {
         switch (ty.getKind()) {
             case BType::Kind::INTEGER:
                 return "$int";
@@ -451,7 +456,7 @@ namespace ppTransTPTP {
     }
 
     void ppTrans(std::ostringstream &str, Context &ctx, LocalEquations &eqs, const Expr &e,
-                 std::vector<std::string> &used_ids) {
+                 lexicon_t &used_ids) {
         assert(e.getType().getKind() != BType::Kind::ProductType);
         assert(e.getType().getKind() != BType::Kind::Struct);
         assert(e.getType().getKind() != BType::Kind::PowerType);
@@ -771,7 +776,7 @@ namespace ppTransTPTP {
     }
 
     void
-    toIdentList(std::ostream &str, Context &ctx, LocalEquations &eqs, const Expr &e, std::vector<std::string> &used_ids) {
+    toIdentList(std::ostream &str, Context &ctx, LocalEquations &eqs, const Expr &e, lexicon_t &used_ids) {
         switch (e.getType().getKind()) {
             case BType::Kind::ProductType: {
                 auto pair = splitPair(eqs, e);
@@ -792,7 +797,7 @@ namespace ppTransTPTP {
         }
     }
 
-    void toTypeList(std::ostringstream &str, Context &ctx, const BType &ty, std::vector<std::string> &used_ids) {
+    void toTypeList(std::ostringstream &str, Context &ctx, const BType &ty, lexicon_t &used_ids) {
         switch (ty.getKind()) {
             case BType::Kind::INTEGER:
             case BType::Kind::STRING:
@@ -818,15 +823,15 @@ namespace ppTransTPTP {
     }
 
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr &rhs,
-                     std::vector<std::string> &used_ids);
+                     lexicon_t &used_ids);
 
     void
     add_local_defs(std::ostringstream &str, Context &env, const LocalEquations &local_eqs, const std::ostringstream &f,
-                   std::vector<std::string> &used_ids);
+                   lexicon_t &used_ids);
 
     // Convert an equality [lhs]=[rhs] into a TPTP string
     void ppTrans_eq(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr &rhs,
-                    std::vector<std::string> &used_ids) {
+                    lexicon_t &used_ids) {
         //assert(BType::weak_eq(lhs.getType(),rhs.getType()));
         const BType &ty = lhs.getType();
 
@@ -1109,7 +1114,7 @@ namespace ppTransTPTP {
 
     // A function to instantiate the membership predicate for a given type
     void makeMem(std::ostringstream &str, Context &ctx, LocalEquations &eqs, const Expr &lhs, const std::string &set,
-                 const BType &set_type, std::vector<std::string> &used_ids) {
+                 const BType &set_type, lexicon_t &used_ids) {
         //assert(set_type.getKind() == BType::Kind::PowerType);
         str << ctx.registerMem(set_type, used_ids) << "(";
         toIdentList(str, ctx, eqs, lhs, used_ids);
@@ -1117,7 +1122,7 @@ namespace ppTransTPTP {
     }
 
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr::BinaryExpr &set,
-                     std::vector<std::string> &used_ids) {
+                     lexicon_t &used_ids) {
         BType ty_rhs = BType::POW(lhs.getType());
         switch (set.op) {
             case Expr::BinaryOp::Cartesian_Product: {
@@ -1562,7 +1567,7 @@ namespace ppTransTPTP {
     }
 
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr::NaryExpr &rhs,
-                     std::vector<std::string> &used_ids) {
+                     lexicon_t &used_ids) {
         switch (rhs.op) {
             case Expr::NaryOp::Sequence: {
                 std::vector<Pred> disj;
@@ -1588,7 +1593,7 @@ namespace ppTransTPTP {
     }
 
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr::QuantifiedExpr &rhs,
-                     std::vector<std::string> &used_ids) {
+                     lexicon_t &used_ids) {
         switch (rhs.op) {
             case Expr::QuantifiedOp::Lambda: {
                 LocalEquations eqs;
@@ -1637,7 +1642,7 @@ namespace ppTransTPTP {
     }
 
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr::UnaryExpr &rhs,
-                     std::vector<std::string> &used_ids) {
+                     lexicon_t &used_ids) {
         BType ty_rhs = BType::POW(lhs.getType());
         switch (rhs.op) {
             case Expr::UnaryOp::Domain: {
@@ -1996,7 +2001,7 @@ namespace ppTransTPTP {
 
     // Convert a membership predicate [lhs]:[rhs] into a smtlib string
     void ppTrans_mem(std::ostringstream &str, Context &ctx, const Expr &lhs, const Expr &rhs,
-                     std::vector<std::string> &used_ids) {
+                     lexicon_t &used_ids) {
         //assert(BType::weak_eq(BType::POW(lhs.getType()),rhs.getType()));
 
         switch (rhs.getTag()) {
@@ -2172,7 +2177,7 @@ namespace ppTransTPTP {
     }
 
     void
-    ppTrans(std::ostringstream &str, Context &ctx, const Pred::ExprComparison &cmp, std::vector<std::string> &used_ids) {
+    ppTrans(std::ostringstream &str, Context &ctx, const Pred::ExprComparison &cmp, lexicon_t &used_ids) {
         switch (cmp.op) {
             case Pred::ComparisonOp::Subset: {
                 BType ty_lhs = cmp.lhs.getType();
@@ -2319,7 +2324,7 @@ namespace ppTransTPTP {
     }
 
     // Convert a predicate into an TPTP string
-    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::vector<std::string> &used_ids) {
+    void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, lexicon_t &used_ids) {
 
         switch (p.getTag()) {
             case Pred::PKind::True:
@@ -2441,7 +2446,7 @@ namespace ppTransTPTP {
 
     void
     add_local_defs(std::ostringstream &str, Context &env, const LocalEquations &local_eqs, const std::ostringstream &f,
-                   std::vector<std::string> &used_ids) {
+                   lexicon_t &used_ids) {
         if (local_eqs.eqs.empty()) {
             str << f.str();
         } else {
@@ -2470,7 +2475,7 @@ namespace ppTransTPTP {
     }
 
     // Convert a set definition into a tptp string
-    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set, std::vector<std::string> &used_ids) {
+    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set, lexicon_t &used_ids) {
         if (set.elts.empty()) {
             std::vector<Pred> conj;
             conj.push_back(Pred::makeNegation(Pred::makeExprComparison(
