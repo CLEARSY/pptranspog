@@ -65,6 +65,6 @@ Both scripts will compile the code (using cmake and make) if needed.
 
 ## COPYING
 
-This software is copyright (C) CLEARSY 2023. All rights reserved.
+This software is copyright (C) CLEARSY 2023, 2024. All rights reserved.
 
 The source code is distributed under the terms of the GNU General Public Licence (GNU GPL) Version 3.
