@@ -130,6 +130,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const std::string &filename,
             const std::string &minint,
             const std::string &maxint)
@@ -174,6 +175,8 @@ namespace ppTransNonIncr {
         // definitions
         std::vector<std::string> defines;
         for(auto &def_name : group.definitions){
+            // B definitions are handled by the prelude
+            if (def_name != "B definitions") {
             const pog::Define &def = pog.defines[findDef(pog.defines,def_name)];
             for(size_t i = 0; i < def.contents.size(); ++i) {
                 const auto &e = def.contents[i];
@@ -210,6 +213,7 @@ namespace ppTransNonIncr {
                         }
                     }
                 }
+            }
             }
         }
 
@@ -262,12 +266,11 @@ namespace ppTransNonIncr {
         out << "(set-option :print-success false)\n";
         if(model)
             out << "(set-option :produce-models true)\n";
-        out << "(set-logic AUFNIRA)\n";
-        out << "; PO " << group_nb << " " << goal_nb << " \n";
+        out << "(set-logic ALL)\n";
+        out << "; PO " << group_nb << " " << goal_nb << "\n";
         out << "; Group " << group.tag << "\n";
         out << "; Tag " << sg.tag << "\n";
-        out << "; Prelude\n";
-        ppTrans::printPrelude(out,minint,maxint);
+        ppTrans::printPrelude(out, OptionPrelude(pog, allPreludeOptions), minint, maxint);
         out << "; Global declarations\n";
         for(auto &s : used_ids){
             if(s != "mem0" && s != "mem1")
@@ -301,6 +304,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const string &minint,
             const string &maxint)
     {
@@ -313,7 +317,7 @@ namespace ppTransNonIncr {
         std::string absolutefilename { utils::absoluteFilePath(filename) };
         saveSmtLibFileNonIncr( pog, env, definitionHyps_tr, definitionSets_tr,
                 globalHyps_tr, localHyps_tr, groupIdx, goalIdx, rp, dd, model,
-                absolutefilename, minint, maxint);
+                allPreludeOptions, absolutefilename, minint, maxint);
     }
 
     void saveSmtLibFileNonIncr(
@@ -322,6 +326,7 @@ namespace ppTransNonIncr {
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const std::string &minint,
             const std::string &maxint)
     {
@@ -339,7 +344,7 @@ namespace ppTransNonIncr {
                 std::string path { prefix + "-" + to_string(group_nb) + "-" + to_string(po_nb) + ".smt2" };
                 saveSmtLibFileNonIncr( pog, env, definitionHyps_tr, definitionSets_tr,
                                        globalHyps_tr, localHyps_tr, group_nb, po_nb, rp, dd, model,
-                                       path, minint, maxint);
+                                       allPreludeOptions, path, minint, maxint);
             }
         }
     }

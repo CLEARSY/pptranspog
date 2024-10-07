@@ -23,12 +23,17 @@
 
 namespace SMTLIB
 {
-/**@todo extract all theory bits from ppTrans.cpp:printPrelude() here */
-
+extern const std::string divB;
+extern const std::string iexp;
+extern const std::string rexp;
+extern const std::string ceiling;
 extern const std::string isum;
 extern const std::string iprod;
 extern const std::string rsum;
 extern const std::string rprod;
+extern const std::string fcomp;
+extern const std::string fop;
 } // namespace SMTLIB
+
 
 #endif // THEORY_SMTLIB_H

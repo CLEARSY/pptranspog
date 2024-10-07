@@ -1,86 +1,13 @@
 (set-option :print-success false)
-(set-logic AUFNIRA)
-; PO 5 0 
+(set-logic ALL)
+; PO 5 0
 ; Group AssertionLemmas
 ; Tag Assertion is verified
 ; Prelude
 (declare-sort P 1)
-(declare-sort C 2)
-(declare-sort String 0)
-(declare-sort Float 0)
-(declare-fun divB (Int Int) Int)
-(assert (!
- (forall ((x Int) (y Int))
-  (!
-   (and
-    (=> (and (<= 0 x) (< 0 y)) (= (divB x y) (div x y)))
-    (=> (and (<= x 0) (< 0 y)) (= (divB x y) (- 0 (div (- 0 x) y))))
-    (=> (and (<= 0 x) (< y 0)) (= (divB x y) (div x y)))
-    (=> (and (<= x 0) (< y 0)) (= (divB x y) (div (- 0 x) (- 0 y))))
-   )
-   :pattern ((divB x y))
-  )
- )
- :named |divB_axiom|
-))
-(declare-fun exp (Int Int) Int)
-(assert (!
- (forall ((x Int))
-  (!
-   (= (exp x 0) 1)
-   :pattern ((exp x 0))
-  )
- )
- :named |exp_axiom_1|
-))
-(assert (!
- (forall ((x Int) (n Int))
-  (!
-   (=> (>= n 1) (= (exp x n) (* x (exp x (- n 1)))))
-   :pattern ((exp x n))
-  )
- )
- :named |exp_axiom_2|
-))
-(declare-fun rexp (Real Int) Real)
-(assert (!
- (forall ((x Real))
-  (!
-   (=> (not (= x 0.0)) (= (rexp x 0) 1.0))
-   :pattern ((rexp x 0))
-  )
- )
- :named |rexp_axiom_1|
-))
-(assert (!
- (forall ((x Real) (n Int))
-  (!
-   (=> (>= n 1) (= (rexp x n) (* x (rexp x (- n 1)))))
-   :pattern ((rexp x n))
-  )
- )
- :named |rexp_axiom_2|
-))
-(declare-fun ceiling (Real) Int)
-(assert (!
- (forall ((x Real))
-  (!
-   (=> (is_int x) (= (ceiling x) (to_int x)))
-   :pattern ((ceiling x))
-  )
- )
- :named |ceiling_axiom_1|
-))
-(assert (!
- (forall ((x Real))
-  (!
-   (=> (not (is_int x)) (= (ceiling x) (+ (to_int x) 1)))
-   :pattern ((ceiling x))
-  )
- )
- :named |ceiling_axiom_2|
-))
 (declare-fun mem0 (Int (P Int)) Bool)
+(define-fun MinInt () Int (- 2147483648))
+(define-fun MaxInt () Int 2147483647)
 
 (declare-fun isum ((P Int)) Int)
 
@@ -118,81 +45,28 @@
   (=> (not (mem0 x S))
       (forall ((T (P Int)))
         (=> (forall ((y Int)) (= (mem0 y T) (or (= x y) (mem0 y S))))
-            (= (iprod T) (+ (iprod S) x) )))))
+            (= (iprod T) (* (iprod S) x) )))))
   :named |iprod_axiom_2|))
 
-(declare-fun mem1 (Real (P Real)) Bool)
-
-(declare-fun rsum ((P Real)) Real)
-
-(assert (!
- (forall ((s (P Real)))
-  (=>
-   (forall ((x Real)) (not (mem1 x s)))
-   (= (rsum s) 0.0)
-  )
- )
- :named |rsum_axiom_1|))
-
-(assert (!
-(forall ((x Real) (S (P Real)))
-  (=> (not (mem1 x S))
-      (forall ((T (P Real)))
-        (=> (forall ((y Real)) (= (mem1 y T) (or (= x y) (mem1 y S))))
-            (= (rsum T) (+ (rsum S) x) )))))
-  :named |rsum_axiom_2|))
-
-
-(declare-fun rprod ((P Real)) Real)
-
-(assert (!
- (forall ((S (P Real)))
-  (=>
-   (forall ((x Real)) (not (mem1 x S)))
-   (= (rprod S) 1.0)
-  )
- )
- :named |rprod_axiom_1|))
-
-(assert (!
-(forall ((x Real) (S (P Real)))
-  (=> (not (mem1 x S))
-      (forall ((T (P Real)))
-        (=> (forall ((y Real)) (= (mem1 y T) (or (= x y) (mem1 y S))))
-            (= (rprod T) (+ (rprod S) x) )))))
-  :named |rprod_axiom_2|))
-
-(declare-fun fle (Float Float) Bool)
-(declare-fun flt (Float Float) Bool)
-(declare-fun fge (Float Float) Bool)
-(declare-fun fgt (Float Float) Bool)
-(declare-fun fadd (Float Float) Float)
-(declare-fun fsub (Float Float) Float)
-(declare-fun fmul (Float Float) Float)
-(declare-fun fdiv (Float Float) Float)
-(define-fun MinInt () Int (- 2147483648))
-(define-fun MaxInt () Int 2147483647)
 ; Global declarations
 (declare-fun g_S1_0 () (P Int))
 (declare-fun g_S2_1 () (P Int))
 (declare-fun g_S3_2 () (P Int))
 ; Defines
-(assert (forall ( (x_3 Int) ) (= (and (<= 0 x_3) (<= x_3 MaxInt)) (and (>= x_3 0) (<= x_3 MaxInt)))))
-(assert (forall ( (x_4 Int) ) (= (and (>= x_4 MinInt) (<= x_4 MaxInt)) (and (>= x_4 MinInt) (<= x_4 MaxInt)))))
-(assert (forall ( (x_5 Int) ) (=> (mem0 x_5 g_S1_0) true)))
-(assert (forall ( (x_6 Int) ) (=> (mem0 x_6 g_S2_1) true)))
-(assert (forall ( (x_7 Int) ) (=> (mem0 x_7 g_S3_2) true)))
-(assert (forall ( (x_8 Int) ) (= (mem0 x_8 g_S1_0) false)))
-(assert (forall ( (x_9 Int) ) (= (mem0 x_9 g_S2_1) (= x_9 1))))
-(assert (forall ( (x_10 Int) ) (= (mem0 x_10 g_S3_2) (or  (= x_10 1) (= x_10 2) (= x_10 3)))))
+(assert (forall ( (x_3 Int) ) (=> (mem0 x_3 g_S1_0) true)))
+(assert (forall ( (x_4 Int) ) (=> (mem0 x_4 g_S2_1) true)))
+(assert (forall ( (x_5 Int) ) (=> (mem0 x_5 g_S3_2) true)))
+(assert (forall ( (x_6 Int) ) (= (mem0 x_6 g_S1_0) false)))
+(assert (forall ( (x_7 Int) ) (= (mem0 x_7 g_S2_1) (= x_7 1))))
+(assert (forall ( (x_8 Int) ) (= (mem0 x_8 g_S3_2) (or  (= x_8 1) (= x_8 2) (= x_8 3)))))
 ; Global hypotheses
-(assert (forall ((x_56 (P Int)) ) (=> (forall ( (x_57 Int) ) (= (mem0 x_57 x_56) (exists ( (x_58 Int) ) (and  (mem0 x_58 g_S1_0) (= x_57 x_58))))) (= (isum x_56) 0))))
-(assert (forall ((x_59 (P Int)) ) (=> (forall ( (x_60 Int) ) (= (mem0 x_60 x_59) (exists ( (x_61 Int) ) (and  (mem0 x_61 g_S2_1) (= x_60 x_61))))) (= (isum x_59) 1))))
-(assert (forall ((x_62 (P Int)) ) (=> (forall ( (x_63 Int) ) (= (mem0 x_63 x_62) (exists ( (x_64 Int) ) (and  (mem0 x_64 g_S3_2) (= x_63 x_64))))) (= (isum x_62) 6))))
-(assert (forall ((x_65 (P Int)) ) (=> (forall ( (x_66 Int) ) (= (mem0 x_66 x_65) (exists ( (x_67 Int) ) (and  (mem0 x_67 g_S1_0) (= x_66 x_67))))) (= (prod x_65) 1))))
-(assert (forall ((x_68 (P Int)) ) (=> (forall ( (x_69 Int) ) (= (mem0 x_69 x_68) (exists ( (x_70 Int) ) (and  (mem0 x_70 g_S2_1) (= x_69 x_70))))) (= (prod x_68) 1))))
+(assert (forall ((x_54 (P Int)) ) (=> (forall ( (x_55 Int) ) (= (mem0 x_55 x_54) (exists ( (x_56 Int) ) (and  (mem0 x_56 g_S1_0) (= x_55 x_56))))) (= (isum x_54) 0))))
+(assert (forall ((x_57 (P Int)) ) (=> (forall ( (x_58 Int) ) (= (mem0 x_58 x_57) (exists ( (x_59 Int) ) (and  (mem0 x_59 g_S2_1) (= x_58 x_59))))) (= (isum x_57) 1))))
+(assert (forall ((x_60 (P Int)) ) (=> (forall ( (x_61 Int) ) (= (mem0 x_61 x_60) (exists ( (x_62 Int) ) (and  (mem0 x_62 g_S3_2) (= x_61 x_62))))) (= (isum x_60) 6))))
+(assert (forall ((x_63 (P Int)) ) (=> (forall ( (x_64 Int) ) (= (mem0 x_64 x_63) (exists ( (x_65 Int) ) (and  (mem0 x_65 g_S1_0) (= x_64 x_65))))) (= (iprod x_63) 1))))
+(assert (forall ((x_66 (P Int)) ) (=> (forall ( (x_67 Int) ) (= (mem0 x_67 x_66) (exists ( (x_68 Int) ) (and  (mem0 x_68 g_S2_1) (= x_67 x_68))))) (= (iprod x_66) 1))))
 ; Local hypotheses
 ; Goal
-(assert (not (forall ((x_71 (P Int)) ) (=> (forall ( (x_72 Int) ) (= (mem0 x_72 x_71) (exists ( (x_73 Int) ) (and  (mem0 x_73 g_S3_2) (= x_72 x_73))))) (= (prod x_71) 6)))))
+(assert (not (forall ((x_69 (P Int)) ) (=> (forall ( (x_70 Int) ) (= (mem0 x_70 x_69) (exists ( (x_71 Int) ) (and  (mem0 x_71 g_S3_2) (= x_70 x_71))))) (= (iprod x_69) 6)))))
 (check-sat)
 (exit)

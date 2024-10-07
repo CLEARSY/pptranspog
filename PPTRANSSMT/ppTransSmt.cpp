@@ -58,6 +58,8 @@ static void display_help()
          << "\t\t\tSelects the N-th Simple_Goal child element from the M-th Proof_Obligation" << endl
          << "\t\t\telement for translation." << endl
          << "\t\t\tIf several goals are selected, the SMT produced will contain push/pop statements." << endl
+         << "\t\t-c" << endl
+         << "\t\t\tConsider that all options are needed in the prelude."
          << "\t\t-rp R" << endl
          << "\t\t\tSelects hypothesis that belong to rp(N)." << endl
          << "\t\t\t\tNon-incremental mode and default mode with a single selected goal." << endl
@@ -91,6 +93,7 @@ int main(int argc, char **argv)
     vector<pair<int, int>> goals;
     bool incr = true;
     bool model = false;
+    bool allPreludeOptions = false;
     int rp = -1;
     bool dd = false;
 
@@ -128,6 +131,9 @@ int main(int argc, char **argv)
             arg += 1;
         } else if (strcmp(argv[arg], "-m") == 0) {
             model = true;
+            arg += 1;
+        } else if (strcmp(argv[arg], "-c") == 0) {
+            allPreludeOptions = true;
             arg += 1;
         } else if (strcmp(argv[arg], "-rp") == 0) {
             if (arg+1 < argc){
@@ -173,30 +179,28 @@ int main(int argc, char **argv)
     /* The presence of -a parameters indicates that
      * ppTransSmt is used as a writer tool in a proof mechanism:
      * only one file is produced */
-    if(0 < goals.size()) {
-        if(incr) {
+    if (0 < goals.size()) {
+        if (incr) {
             map<int, vector<int>> sgoals;
             classifyGoals(goals, sgoals);
-            ppTransIncr::saveSmtLibFileIncrSome(pog, output, sgoals, model);
-        }
-        else {
+            ppTransIncr::saveSmtLibFileIncrSome(pog, output, sgoals, model, allPreludeOptions);
+        } else {
             if (goals.size() != 1) {
                 display_help();
                 exit(EXIT_FAILURE);
             }
-            const int groupId { goals[0].first };
-            const int goalId { goals[0].second };
-            ppTransNonIncr::saveSmtLibFileNonIncrOne(pog, output, groupId, goalId, rp, dd, model);
+            const int groupId = goals[0].first;
+            const int goalId = goals[0].second;
+            ppTransNonIncr::saveSmtLibFileNonIncrOne(pog, output, groupId, goalId, rp, dd, model, allPreludeOptions);
         }
     }
     /* ppTransSmt is used as a command-line tool,
      * e.g. to produced benchmarks. */
     else {
-        if(incr) {
-            ppTransIncr::saveSmtLibFileIncr(pog, output, model);
-        }
-        else {
-            ppTransNonIncr::saveSmtLibFileNonIncr(pog, output, rp, dd, model);
+        if (incr) {
+            ppTransIncr::saveSmtLibFileIncr(pog, output, model, allPreludeOptions);
+        } else {
+            ppTransNonIncr::saveSmtLibFileNonIncr(pog, output, rp, dd, model, allPreludeOptions);
         }
     }
     return EXIT_SUCCESS;

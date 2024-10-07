@@ -54,6 +54,7 @@ extern void saveSmtLibFileNonIncrOne(
         int rp,
         bool dd,
         bool model,
+        bool allPreludeOptions,
         const string &minint = "(- 2147483648)",
         const string &maxint = "2147483647");
 
@@ -75,6 +76,7 @@ extern void saveSmtLibFileNonIncrOne(
             int rp,
             bool dd,
             bool model,
+            bool allPreludeOptions,
             const string &minint = "(- 2147483648)",
             const string &maxint = "2147483647");
 }
