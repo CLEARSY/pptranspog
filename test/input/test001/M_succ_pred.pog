@@ -1,151 +1,169 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Proof_Obligations xmlns="https://www.atelierb.eu/Formats/pog" version="1.0">
     <Define name="B definitions" hash="7128875304803749033">
         <Exp_Comparison op="=">
-            <Id value="NAT" typref="0" />
+            <Id value="NAT" typref="0"/>
             <Binary_Exp op=".." typref="0">
-                <Integer_Literal value="0" typref="1" />
-                <Id value="MAXINT" typref="1" />
+                <Integer_Literal value="0" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
             </Binary_Exp>
         </Exp_Comparison>
         <Exp_Comparison op="=">
-            <Id value="INT" typref="0" />
+            <Id value="INT" typref="0"/>
             <Binary_Exp op=".." typref="0">
-                <Id value="MININT" typref="1" />
-                <Id value="MAXINT" typref="1" />
+                <Id value="MININT" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
             </Binary_Exp>
         </Exp_Comparison>
     </Define>
-    <Define name="ctx" hash="0" />
-    <Define name="seext" hash="0" />
-    <Define name="lprp" hash="9194834340957316624">
+    <Define name="ctx" hash="0"/>
+    <Define name="seext" hash="0"/>
+    <Define name="lprp" hash="13072028599284727377">
         <Exp_Comparison op=":">
-            <Id value="c1" typref="1" />
-            <Id value="INTEGER" typref="0" />
+            <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:2:1:1:1"/>
+            <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:2:1:1:2"/>
         </Exp_Comparison>
         <Exp_Comparison op=":">
-            <Id value="s1" typref="0" />
+            <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:2:1:2:1"/>
+            <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:2:1:2:2"/>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:2:1:3:1"/>
             <Unary_Exp op="POW" typref="2">
-                <Id value="INTEGER" typref="0" />
+                <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:2:1:3:2:1"/>
             </Unary_Exp>
         </Exp_Comparison>
     </Define>
-    <Define name="inprp" hash="0" />
-    <Define name="inext" hash="0" />
-    <Define name="inv" hash="0" />
-    <Define name="ass" hash="16919360726429981641">
+    <Define name="inprp" hash="0"/>
+    <Define name="inext" hash="0"/>
+    <Define name="inv" hash="0"/>
+    <Define name="ass" hash="16926182764984386021">
         <Exp_Comparison op="=">
             <Binary_Exp op="(" typref="1">
-                <Id value="succ" typref="3" />
-                <Integer_Literal value="1" typref="1" />
+                <Id value="succ" typref="3"/>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
             </Binary_Exp>
-            <Integer_Literal value="1" typref="1" />
+            <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="(" typref="1">
-                <Id value="succ" typref="3" />
-                <Id value="c1" typref="1" />
+                <Id value="succ" typref="3"/>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
             </Binary_Exp>
-            <Id value="c1" typref="1" />
+            <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="[" typref="0">
-                <Id value="succ" typref="3" />
+                <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                 <Nary_Exp op="{" typref="0">
-                    <Id value="c1" typref="1" />
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                 </Nary_Exp>
             </Binary_Exp>
-            <Id value="s1" typref="0" />
+            <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="[" typref="0">
-                <Id value="succ" typref="3" />
-                <Id value="s1" typref="0" />
+                <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
             </Binary_Exp>
-            <Id value="s1" typref="0" />
+            <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="(" typref="1">
-                <Id value="pred" typref="3" />
-                <Integer_Literal value="1" typref="1" />
+                <Id value="pred" typref="3"/>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
             </Binary_Exp>
-            <Integer_Literal value="1" typref="1" />
+            <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="(" typref="1">
-                <Id value="pred" typref="3" />
-                <Id value="c1" typref="1" />
+                <Id value="pred" typref="3"/>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
             </Binary_Exp>
-            <Id value="c1" typref="1" />
+            <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="[" typref="0">
-                <Id value="pred" typref="3" />
+                <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
                 <Nary_Exp op="{" typref="0">
-                    <Id value="c1" typref="1" />
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
                 </Nary_Exp>
             </Binary_Exp>
-            <Id value="s1" typref="0" />
+            <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op="[" typref="0">
-                <Id value="pred" typref="3" />
-                <Id value="s1" typref="0" />
+                <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:8:1:1"/>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:1:2"/>
             </Binary_Exp>
-            <Id value="s1" typref="0" />
+            <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:2"/>
         </Exp_Comparison>
         <Exp_Comparison op="=">
             <Binary_Exp op=";" typref="3">
-                <Id value="succ" typref="3" />
-                <Id value="pred" typref="3" />
+                <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:9:1:1"/>
+                <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:9:1:2"/>
             </Binary_Exp>
             <Unary_Exp op="id" typref="3">
-                <Id value="INTEGER" typref="0" />
+                <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:4:9:2:1"/>
             </Unary_Exp>
         </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Binary_Exp op="|-&gt;" typref="4">
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:10:1:1"/>
+                <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:4:10:1:2"/>
+            </Binary_Exp>
+            <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:10:2"/>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Binary_Exp op="|-&gt;" typref="4">
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:11:1:1"/>
+                <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:4:11:1:2"/>
+            </Binary_Exp>
+            <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:11:2"/>
+        </Exp_Comparison>
     </Define>
-    <Define name="cst" hash="0" />
-    <Define name="sets" hash="0" />
+    <Define name="cst" hash="0"/>
+    <Define name="sets" hash="0"/>
     <Proof_Obligation goalHash="5680156648262153945">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Simple_Goal>
             <Tag>Assertion is verified</Tag>
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="(" typref="1">
-                        <Id value="succ" typref="3" />
-                        <Integer_Literal value="1" typref="1" />
+                        <Id value="succ" typref="3"/>
+                        <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                     </Binary_Exp>
-                    <Integer_Literal value="1" typref="1" />
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="15113813029948805988">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -153,40 +171,40 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="(" typref="1">
-                        <Id value="succ" typref="3" />
-                        <Id value="c1" typref="1" />
+                        <Id value="succ" typref="3"/>
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                     </Binary_Exp>
-                    <Id value="c1" typref="1" />
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="2105416804022754988">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -194,53 +212,53 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="[" typref="0">
-                        <Id value="succ" typref="3" />
+                        <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                         <Nary_Exp op="{" typref="0">
-                            <Id value="c1" typref="1" />
+                            <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                         </Nary_Exp>
                     </Binary_Exp>
-                    <Id value="s1" typref="0" />
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="4503695131170378355">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -248,60 +266,60 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="[" typref="0">
-                        <Id value="succ" typref="3" />
-                        <Id value="s1" typref="0" />
+                        <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                        <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                     </Binary_Exp>
-                    <Id value="s1" typref="0" />
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="5680156648311886921">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -309,69 +327,69 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="(" typref="1">
-                        <Id value="pred" typref="3" />
-                        <Integer_Literal value="1" typref="1" />
+                        <Id value="pred" typref="3"/>
+                        <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
                     </Binary_Exp>
-                    <Integer_Literal value="1" typref="1" />
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="15113812977577123571">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -379,78 +397,78 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="(" typref="1">
-                        <Id value="pred" typref="3" />
-                        <Id value="c1" typref="1" />
+                        <Id value="pred" typref="3"/>
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
                     </Binary_Exp>
-                    <Id value="c1" typref="1" />
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="2105416803409869502">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -458,91 +476,91 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="[" typref="0">
-                        <Id value="pred" typref="3" />
+                        <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
                         <Nary_Exp op="{" typref="0">
-                            <Id value="c1" typref="1" />
+                            <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
                         </Nary_Exp>
                     </Binary_Exp>
-                    <Id value="s1" typref="0" />
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="4503695130953176757">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="pred" typref="3" />
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -550,98 +568,98 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op="[" typref="0">
-                        <Id value="pred" typref="3" />
-                        <Id value="s1" typref="0" />
+                        <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:8:1:1"/>
+                        <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:1:2"/>
                     </Binary_Exp>
-                    <Id value="s1" typref="0" />
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
     </Proof_Obligation>
     <Proof_Obligation goalHash="15591784862821861401">
         <Tag>AssertionLemmas</Tag>
-        <Definition name="B definitions" />
-        <Definition name="ctx" />
-        <Definition name="cst" />
-        <Definition name="lprp" />
-        <Definition name="inprp" />
-        <Definition name="inext" />
-        <Definition name="seext" />
-        <Definition name="inv" />
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="succ" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="succ" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Integer_Literal value="1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
                 </Binary_Exp>
-                <Integer_Literal value="1" typref="1" />
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="(" typref="1">
-                    <Id value="pred" typref="3" />
-                    <Id value="c1" typref="1" />
+                    <Id value="pred" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
                 </Binary_Exp>
-                <Id value="c1" typref="1" />
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="pred" typref="3" />
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
                     <Nary_Exp op="{" typref="0">
-                        <Id value="c1" typref="1" />
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
                     </Nary_Exp>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Hypothesis>
             <Exp_Comparison op="=">
                 <Binary_Exp op="[" typref="0">
-                    <Id value="pred" typref="3" />
-                    <Id value="s1" typref="0" />
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:8:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:1:2"/>
                 </Binary_Exp>
-                <Id value="s1" typref="0" />
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:2"/>
             </Exp_Comparison>
         </Hypothesis>
         <Simple_Goal>
@@ -649,12 +667,241 @@
             <Goal>
                 <Exp_Comparison op="=">
                     <Binary_Exp op=";" typref="3">
-                        <Id value="succ" typref="3" />
-                        <Id value="pred" typref="3" />
+                        <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:9:1:1"/>
+                        <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:9:1:2"/>
                     </Binary_Exp>
                     <Unary_Exp op="id" typref="3">
-                        <Id value="INTEGER" typref="0" />
+                        <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:4:9:2:1"/>
                     </Unary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="13421255925397029486">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
+                </Binary_Exp>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
+                </Binary_Exp>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
+                    <Nary_Exp op="{" typref="0">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
+                    </Nary_Exp>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
+                </Binary_Exp>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="pred" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
+                </Binary_Exp>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
+                    <Nary_Exp op="{" typref="0">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
+                    </Nary_Exp>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:8:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:1:2"/>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op=";" typref="3">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:9:1:1"/>
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:9:1:2"/>
+                </Binary_Exp>
+                <Unary_Exp op="id" typref="3">
+                    <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:4:9:2:1"/>
+                </Unary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Binary_Exp op="|-&gt;" typref="4">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:10:1:1"/>
+                        <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:4:10:1:2"/>
+                    </Binary_Exp>
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:10:2"/>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="5368420803165189500">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="succ" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:1:1"/>
+                </Binary_Exp>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:1:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="succ" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:1:1"/>
+                </Binary_Exp>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:2:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:3:1:1"/>
+                    <Nary_Exp op="{" typref="0">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:3:1:2:1"/>
+                    </Nary_Exp>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:3:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:4:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:1:2"/>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:4:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="pred" typref="3"/>
+                    <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:1:1"/>
+                </Binary_Exp>
+                <Integer_Literal value="1" typref="1" tag="M_succ_pred.bxml:1:4:5:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="(" typref="1">
+                    <Id value="pred" typref="3"/>
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:1:1"/>
+                </Binary_Exp>
+                <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:6:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:7:1:1"/>
+                    <Nary_Exp op="{" typref="0">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:7:1:2:1"/>
+                    </Nary_Exp>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:7:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op="[" typref="0">
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:8:1:1"/>
+                    <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:1:2"/>
+                </Binary_Exp>
+                <Id value="s1" typref="0" tag="M_succ_pred.bxml:1:4:8:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Binary_Exp op=";" typref="3">
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:9:1:1"/>
+                    <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:9:1:2"/>
+                </Binary_Exp>
+                <Unary_Exp op="id" typref="3">
+                    <Id value="INTEGER" typref="0" tag="M_succ_pred.bxml:1:4:9:2:1"/>
+                </Unary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Binary_Exp op="|-&gt;" typref="4">
+                    <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:10:1:1"/>
+                    <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:4:10:1:2"/>
+                </Binary_Exp>
+                <Id value="pred" typref="3" tag="M_succ_pred.bxml:1:4:10:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Binary_Exp op="|-&gt;" typref="4">
+                        <Id value="c1" typref="1" tag="M_succ_pred.bxml:1:4:11:1:1"/>
+                        <Id value="c2" typref="1" tag="M_succ_pred.bxml:1:4:11:1:2"/>
+                    </Binary_Exp>
+                    <Id value="succ" typref="3" tag="M_succ_pred.bxml:1:4:11:2"/>
                 </Exp_Comparison>
             </Goal>
         </Simple_Goal>
@@ -662,26 +909,32 @@
     <TypeInfos>
         <Type id="0">
             <Unary_Exp op="POW">
-                <Id value="INTEGER" />
+                <Id value="INTEGER"/>
             </Unary_Exp>
         </Type>
         <Type id="1">
-            <Id value="INTEGER" />
+            <Id value="INTEGER"/>
         </Type>
         <Type id="2">
             <Unary_Exp op="POW">
                 <Unary_Exp op="POW">
-                    <Id value="INTEGER" />
+                    <Id value="INTEGER"/>
                 </Unary_Exp>
             </Unary_Exp>
         </Type>
         <Type id="3">
             <Unary_Exp op="POW">
                 <Binary_Exp op="*">
-                    <Id value="INTEGER" />
-                    <Id value="INTEGER" />
+                    <Id value="INTEGER"/>
+                    <Id value="INTEGER"/>
                 </Binary_Exp>
             </Unary_Exp>
+        </Type>
+        <Type id="4">
+            <Binary_Exp op="*">
+                <Id value="INTEGER"/>
+                <Id value="INTEGER"/>
+            </Binary_Exp>
         </Type>
     </TypeInfos>
 </Proof_Obligations>

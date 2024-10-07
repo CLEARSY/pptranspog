@@ -1,0 +1,9 @@
+MACHINE M_mem_0
+CONSTANTS
+    c0, s0
+PROPERTIES
+    c0: INTEGER &
+    s0: POW(INTEGER)
+ASSERTIONS
+    c0: s0
+END

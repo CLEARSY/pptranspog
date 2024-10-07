@@ -1,0 +1,9 @@
+MACHINE M_mem_1
+CONSTANTS
+    c0, s0
+PROPERTIES
+    c0: REAL &
+    s0: POW(REAL)
+ASSERTIONS
+    c0: s0
+END

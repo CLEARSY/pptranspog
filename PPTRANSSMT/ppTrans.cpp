@@ -432,7 +432,7 @@ namespace ppTrans {
                             ppTrans(str,ctx,eqs,b.rhs,used_ids); str << ")";
                             return;
                         case Expr::BinaryOp::IExponentiation:
-                            str << "(exp ";
+                            str << "(iexp ";
                             ppTrans(str,ctx,eqs,b.lhs,used_ids); str << " ";
                             ppTrans(str,ctx,eqs,b.rhs,used_ids); str << ")";
                             return;
@@ -663,7 +663,7 @@ namespace ppTrans {
                                 Expr l = Expr::makeQuantifiedExpr(Expr::QuantifiedOp::Lambda,q.vars,q.cond.copy(),q.body.copy(),
                                         BType::POW(BType::PROD(tdom,q.body.getType())));
                                 Expr ran = Expr::makeUnaryExpr(Expr::UnaryOp::Range,std::move(l),BType::POW_INT);
-                                str << "(prod " << ctx.nameSimpleExpression(ran,eqs,used_ids) << ")";
+                                str << "(iprod " << ctx.nameSimpleExpression(ran,eqs,used_ids) << ")";
                                 return;
                             }
                     }
@@ -912,15 +912,10 @@ namespace ppTrans {
 
         switch(ty.getKind()){
             case BType::Kind::INTEGER:
-                {
-                    LocalEquations local_eqs;
-                    std::ostringstream str2;
-                    str2 << "(= ";
-                    ppTrans(str2,ctx,local_eqs,lhs,used_ids); str2 << " ";
-                    ppTrans(str2,ctx,local_eqs,rhs,used_ids); str2 << ")";
-                    return add_local_defs(str,ctx,local_eqs,str2,used_ids);
-                }
             case BType::Kind::BOOLEAN:
+            case BType::Kind::STRING:
+            case BType::Kind::FLOAT:
+            case BType::Kind::REAL:
                 {
                     LocalEquations local_eqs;
                     std::ostringstream str2;
@@ -936,7 +931,7 @@ namespace ppTrans {
                     Expr x = getFreshVars(ty_x,vars);
                     Pred p = Pred::makeForall(vars,Pred::makeEquivalence(
                                 Pred::makeExprComparison(Pred::ComparisonOp::Membership,x.copy(),lhs.copy()),
-                                Pred::makeExprComparison(Pred::ComparisonOp::Membership,x.copy(),rhs.copy()) ));
+                                Pred::makeExprComparison(Pred::ComparisonOp::Membership,x.copy(),rhs.copy())));
                     return ppTrans(str,ctx,p,used_ids);
                 }
             case BType::Kind::ProductType:
@@ -950,33 +945,6 @@ namespace ppTrans {
                     str2 << "(and ";
                     ppTrans_eq(str2,ctx,plhs.first,prhs.first,used_ids);
                     str2 << " "; ppTrans_eq(str2,ctx,plhs.second,prhs.second,used_ids); str2 << ")";
-                    return add_local_defs(str,ctx,eqs,str2,used_ids);
-                }
-            case BType::Kind::STRING:
-                {
-                    LocalEquations eqs;
-                    std::ostringstream str2;
-                    str2 << "(= ";
-                    ppTrans(str2,ctx,eqs,lhs,used_ids); str2 << " ";
-                    ppTrans(str2,ctx,eqs,rhs,used_ids); str2 << ")";
-                    return add_local_defs(str,ctx,eqs,str2,used_ids);
-                }
-            case BType::Kind::FLOAT:
-                {
-                    LocalEquations eqs;
-                    std::ostringstream str2;
-                    str2 << "(= ";
-                    ppTrans(str2,ctx,eqs,lhs,used_ids); str2 << " ";
-                    ppTrans(str2,ctx,eqs,rhs,used_ids); str2 << ")";
-                    return add_local_defs(str,ctx,eqs,str2,used_ids);
-                }
-            case BType::Kind::REAL:
-                {
-                    LocalEquations eqs;
-                    std::ostringstream str2;
-                    str2 << "(= ";
-                    ppTrans(str2,ctx,eqs,lhs,used_ids); str2 << " ";
-                    ppTrans(str2,ctx,eqs,rhs,used_ids); str2 << ")";
                     return add_local_defs(str,ctx,eqs,str2,used_ids);
                 }
             case BType::Kind::Struct:
@@ -1931,7 +1899,6 @@ namespace ppTrans {
                 }
             case Expr::EKind::QuantifiedExpr:
                 return ppTrans_mem(str,ctx,lhs,rhs.toQuantiedExpr(),used_ids);
-
             case Expr::EKind::QuantifiedSet:
                 {
                     auto &q = rhs.toQuantifiedSet();
@@ -2335,116 +2302,102 @@ namespace ppTrans {
                     Expr::makeNaryExpr(Expr::NaryOp::Set,std::move(elts),set.setName.type));
             str << "(and ";
             ppTrans(str,env,eq,used_ids);
-            if (set.elts.size() > 1){
-                str << " (distinct";
-                for(int i=0;i<set.elts.size();i++)
-                    str << " " << env.registerId(set.elts[i].name,set.elts[i].type,used_ids);
-                str << ')';
-            } else {
-                str << " true";
-            }
-            str << ')';
+            str << " (distinct";
+            for(size_t i=0;i<set.elts.size();i++)
+                str << " " << env.registerId(set.elts[i].name,set.elts[i].type,used_ids);
+            str << "))";
             return;
         }
     }
 
+    void printPrelude(std::ofstream &out,
+                    const OptionPrelude options,
+                    const std::string &minint, const std::string &maxint) {
+        out << "; Prelude\n";
+        if (options.contains(OptionPrelude::Option::Mem) ||
+            options.contains(OptionPrelude::Option::Pow)) {
+            out << "(declare-sort P 1)\n";
+            out << "(declare-fun mem0 (Int (P Int)) Bool)\n";
+            if (options.contains(OptionPrelude::Option::Real)) {
+                out << "(declare-fun mem1 (Real (P Real)) Bool)\n";
+            }
+        }
+        if (options.contains(OptionPrelude::Option::CartesianProduct)) {
+            out << "(declare-sort C 2)\n";
+        }
+        if (options.contains(OptionPrelude::Option::Float)) {
+            out << "(declare-sort Float 0)\n";
+        }
+        if (options.contains(OptionPrelude::Option::Division)) {
+            out << SMTLIB::divB;
+        }
+        if (options.contains(OptionPrelude::Option::IExp)) {
+            out << SMTLIB::iexp;
+        }
+        if (options.contains(OptionPrelude::Option::RExp)) {
+            out << SMTLIB::rexp;
+        }
+        if (options.contains(OptionPrelude::Option::Int)) {
+            out << "(define-fun MinInt () Int " << minint << ")\n";
+            out << "(define-fun MaxInt () Int " << maxint << ")\n";
+        }
+        if (options.contains(OptionPrelude::Option::ISum)) {
+            out << SMTLIB::isum;
+        }
+        if (options.contains(OptionPrelude::Option::IProd)) {
+            out << SMTLIB::iprod;
+        }
+        if (options.contains(OptionPrelude::Option::Ceiling)) {
+            out << SMTLIB::ceiling;
+        }
+        if (options.contains(OptionPrelude::Option::RSum)) {
+            out << SMTLIB::rsum;
+        }
+        if (options.contains(OptionPrelude::Option::RProd)) {
+            out << SMTLIB::rprod;
+        }
+        if (options.contains(OptionPrelude::Option::Float)) {
+            out << SMTLIB::fcomp << SMTLIB::fop;
+        }
+    }
 
-    void printPrelude (
-            std::ofstream &out,
-            const std::string &minint,
-            const std::string &maxint)
-    {
-      out << "(declare-sort P 1)\n";
-      out << "(declare-sort C 2)\n";
-      out << "(declare-sort String 0)\n";
-      out << "(declare-sort Float 0)\n";
-      out << "(declare-fun divB (Int Int) Int)\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Int) (y Int))\n";
-      out << "  (!\n";
-      out << "   (and\n";
-      out << "    (=> (and (<= 0 x) (< 0 y)) (= (divB x y) (div x y)))\n";
-      out << "    (=> (and (<= x 0) (< 0 y)) (= (divB x y) (- 0 (div (- 0 x) "
-             "y))))\n";
-      out << "    (=> (and (<= 0 x) (< y 0)) (= (divB x y) (div x y)))\n";
-      out << "    (=> (and (<= x 0) (< y 0)) (= (divB x y) (div (- 0 x) (- 0 "
-             "y))))\n";
-      out << "   )\n";
-      out << "   :pattern ((divB x y))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |divB_axiom|\n";
-      out << "))\n";
-      out << "(declare-fun exp (Int Int) Int)\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Int))\n";
-      out << "  (!\n";
-      out << "   (= (exp x 0) 1)\n";
-      out << "   :pattern ((exp x 0))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |exp_axiom_1|\n";
-      out << "))\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Int) (n Int))\n";
-      out << "  (!\n";
-      out << "   (=> (>= n 1) (= (exp x n) (* x (exp x (- n 1)))))\n";
-      out << "   :pattern ((exp x n))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |exp_axiom_2|\n";
-      out << "))\n";
-      out << "(declare-fun rexp (Real Int) Real)\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Real))\n";
-      out << "  (!\n";
-      out << "   (=> (not (= x 0.0)) (= (rexp x 0) 1.0))\n";
-      out << "   :pattern ((rexp x 0))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |rexp_axiom_1|\n";
-      out << "))\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Real) (n Int))\n";
-      out << "  (!\n";
-      out << "   (=> (>= n 1) (= (rexp x n) (* x (rexp x (- n 1)))))\n";
-      out << "   :pattern ((rexp x n))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |rexp_axiom_2|\n";
-      out << "))\n";
-      out << "(declare-fun ceiling (Real) Int)\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Real))\n";
-      out << "  (!\n";
-      out << "   (=> (is_int x) (= (ceiling x) (to_int x)))\n";
-      out << "   :pattern ((ceiling x))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |ceiling_axiom_1|\n";
-      out << "))\n";
-      out << "(assert (!\n";
-      out << " (forall ((x Real))\n";
-      out << "  (!\n";
-      out << "   (=> (not (is_int x)) (= (ceiling x) (+ (to_int x) 1)))\n";
-      out << "   :pattern ((ceiling x))\n";
-      out << "  )\n";
-      out << " )\n";
-      out << " :named |ceiling_axiom_2|\n";
-      out << "))\n";
-      out << "(declare-fun mem0 (Int (P Int)) Bool)\n";
-      out << SMTLIB::isum << SMTLIB::iprod;
-      out << "(declare-fun mem1 (Real (P Real)) Bool)\n";
-      out << SMTLIB::rsum << SMTLIB::rprod;
-      out << "(declare-fun fle (Float Float) Bool)\n";
-      out << "(declare-fun flt (Float Float) Bool)\n";
-      out << "(declare-fun fge (Float Float) Bool)\n";
-      out << "(declare-fun fgt (Float Float) Bool)\n";
-      out << "(declare-fun fadd (Float Float) Float)\n";
-      out << "(declare-fun fsub (Float Float) Float)\n";
-      out << "(declare-fun fmul (Float Float) Float)\n";
-      out << "(declare-fun fdiv (Float Float) Float)\n";
-      out << "(define-fun MinInt () Int " << minint << ")\n";
-      out << "(define-fun MaxInt () Int " << maxint << ")\n";
+    void ppTrans(std::ostringstream &str, Context &env, const Pred &p){
+        std::set<std::string> dummy;
+        ppTrans::ppTrans(str,env,p,dummy);
+        return;
+    }
+
+    void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set){
+        std::set<std::string> dummy;
+        return ppTrans::ppTrans(str,env,set,dummy);
+    }
+
+    void ppTrans(std::ostringstream &str, Context &env, const variant<pog::Set, Pred> &content) {
+        std::set<std::string> dummy;
+        if (std::holds_alternative<pog::Set>(content)) {
+            return ppTrans::ppTrans(str, env, std::get<pog::Set>(content), dummy);
+        } else {
+            return ppTrans::ppTrans(str, env, std::get<Pred>(content), dummy);
+        }
+    }
+
+    static void preamble(pog::Pog& pog,
+                         ppTrans::Context& env,
+                         std::vector<std::string>& defines,
+                         std::vector<std::pair<std::string,int>>& defArity) {
+        decomp::decompose(pog);
+        for (const auto &def : pog.defines) {
+            int nbChildren = 0;
+            // B definitions are handled by the prelude
+            if (def.name != "B definitions") {
+            for (const auto &c : def.contents) {
+                std::ostringstream str;
+                ppTrans(str, env, c);
+                defines.push_back(str.str());
+                nbChildren++;
+            }
+            defArity.push_back(make_pair(def.name, nbChildren));
+            }
+        }
     }
 }

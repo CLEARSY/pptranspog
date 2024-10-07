@@ -20,8 +20,92 @@
 
 using std::string;
 
-namespace SMTLIB
-{
+namespace SMTLIB {
+
+const string divB = R"_(
+(declare-fun divB (Int Int) Int)
+(assert (!
+ (forall ((x Int) (y Int))
+  (!
+   (and
+    (=> (and (<= 0 x) (< 0 y)) (= (divB x y) (div x y)))
+    (=> (and (<= x 0) (< 0 y)) (= (divB x y) (- 0 (div (- 0 x) y))))
+    (=> (and (<= 0 x) (< y 0)) (= (divB x y) (div x y)))
+    (=> (and (<= x 0) (< y 0)) (= (divB x y) (div (- 0 x) (- 0 y))))
+   )
+   :pattern ((divB x y))
+  )
+ )
+ :named |divB_axiom|))
+
+)_";
+
+const string iexp = R"_(
+(declare-fun iexp (Int Int) Int)
+(assert (!
+ (forall ((x Int))
+  (!
+   (=> (not (= x 0)) (= (iexp x 0) 1))
+   :pattern ((iexp x 0))
+  )
+ )
+ :named |iexp_axiom_1|
+))
+(assert (!
+ (forall ((x Int) (n Int))
+  (!
+   (=> (>= n 1) (= (iexp x n) (* x (iexp x (- n 1)))))
+   :pattern ((iexp x n))
+  )
+ )
+ :named |iexp_axiom_2|))
+
+)_";
+
+const string rexp = R"_(
+(declare-fun rexp (Real Int) Real)
+(assert (!
+ (forall ((x Real))
+  (!
+   (=> (not (= x 0.0)) (= (rexp x 0) 1.0))
+   :pattern ((rexp x 0))
+  )
+ )
+ :named |rexp_axiom_1|
+))
+(assert (!
+ (forall ((x Real) (n Int))
+  (!
+   (=> (>= n 1) (= (rexp x n) (* x (rexp x (- n 1)))))
+   :pattern ((rexp x n))
+  )
+ )
+ :named |rexp_axiom_2|))
+
+)_";
+
+const string ceiling = R"_(
+(declare-fun ceiling (Real) Int)
+(assert (!
+ (forall ((x Real))
+  (!
+   (=> (is_int x) (= (ceiling x) (to_int x)))
+   :pattern ((ceiling x))
+  )
+ )
+ :named |ceiling_axiom_1|
+))
+(assert (!
+ (forall ((x Real))
+  (!
+   (=> (not (is_int x)) (= (ceiling x) (+ (to_int x) 1)))
+   :pattern ((ceiling x))
+  )
+ )
+ :named |ceiling_axiom_2|))
+
+)_";
+
 const string isum = R"_(
 (declare-fun isum ((P Int)) Int)
 
@@ -61,7 +145,7 @@ const string iprod = R"_(
   (=> (not (mem0 x S))
       (forall ((T (P Int)))
         (=> (forall ((y Int)) (= (mem0 y T) (or (= x y) (mem0 y S))))
-            (= (iprod T) (+ (iprod S) x) )))))
+            (= (iprod T) (* (iprod S) x) )))))
   :named |iprod_axiom_2|))
 
 )_";
@@ -105,8 +189,24 @@ const string rprod = R"_(
   (=> (not (mem1 x S))
       (forall ((T (P Real)))
         (=> (forall ((y Real)) (= (mem1 y T) (or (= x y) (mem1 y S))))
-            (= (rprod T) (+ (rprod S) x) )))))
+            (= (rprod T) (* (rprod S) x) )))))
   :named |rprod_axiom_2|))
+
+)_";
+
+const string fcomp = R"_(
+(declare-fun fle (Float Float) Bool)
+(declare-fun flt (Float Float) Bool)
+(declare-fun fge (Float Float) Bool)
+(declare-fun fgt (Float Float) Bool)
+
+)_";
+
+const string fop = R"_(
+(declare-fun fadd (Float Float) Float)
+(declare-fun fsub (Float Float) Float)
+(declare-fun fmul (Float Float) Float)
+(declare-fun fdiv (Float Float) Float)
 
 )_";
 } // namespace SMTLIB

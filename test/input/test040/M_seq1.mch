@@ -1,0 +1,15 @@
+MACHINE M_seq1
+CONSTANTS
+    S1, S2
+PROPERTIES
+    S1 : POW(INTEGER) &
+    S1 = {5, 4, 1, 1, 2, 3, 8} &
+    S2 : POW(INTEGER) &
+    S2 = { xx | xx : INTEGER & (xx mod 2) = 0 }
+ASSERTIONS
+    [5, 2, 0] : seq1(S1);
+    [1.2, -5.3] : seq1(REAL);
+    [2, 3, 4] : seq1(S2);
+    [] : seq1(S1);
+    [] : seq1(REAL)
+END

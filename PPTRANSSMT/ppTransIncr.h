@@ -44,6 +44,7 @@ void saveSmtLibFileIncrSome(pog::Pog &pog,
                             const string &filename,
                             map<int, vector<int>>& goals,
                             bool model,
+                            bool allPreludeOptions,
                             const string &minint = "(- 2147483648)",
                             const string &maxint = "2147483647");
 
@@ -58,6 +59,7 @@ void saveSmtLibFileIncrSome(pog::Pog &pog,
 void saveSmtLibFileIncr(pog::Pog &pog,
                         const string &filename,
                         bool model,
+                        bool allPreludeOptions,
                         const string &minint = "(- 2147483648)",
                         const string &maxint = "2147483647");
 }

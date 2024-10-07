@@ -76,6 +76,8 @@ namespace ppTransIncr {
         decomp::decompose(pog);
         for (const auto &def : pog.defines){
             int nbChildren = 0;
+            // B definitions are handled by the prelude
+            if (def.name != "B definitions") {
             for(const auto &e: def.contents) {
                 std::ostringstream str;
                 str << "(define-fun |def_" << def.name << "_" << std::to_string(nbChildren) << "| () Bool ";
@@ -87,13 +89,16 @@ namespace ppTransIncr {
                 defines.push_back(str.str());
                 nbChildren++;
             }
+            }
             defArity[def.name] = nbChildren;
         }
 
     }
 
-    static void saveSmt(const std::string &filename,
+    static void saveSmt(const pog::Pog& pog,
+                        const std::string &filename,
                         bool model,
+                        bool allPreludeOptions,
                         const std::string &minint,
                         const std::string &maxint,
                         const ppTrans::Context& env,
@@ -104,13 +109,12 @@ namespace ppTransIncr {
         std::ofstream out;
         out.open (filename);
 
-        out << "(set-logic AUFNIRA)\n";
+        out << "(set-logic ALL)\n";
         out << "(set-option :print-success false)\n";
         //out << "(set-option :produce-unsat-cores true)\n";
         if(model)
             out << "(set-option :produce-models true)\n";
-        out << "; Prelude\n";
-        ppTrans::printPrelude(out,minint,maxint);
+        ppTrans::printPrelude(out, OptionPrelude(pog, allPreludeOptions), minint, maxint);
         out << "; Global declarations\n";
         for(auto &p : env.getSmtLibDeclarations())
             out << p.second << "\n";
@@ -118,7 +122,7 @@ namespace ppTransIncr {
         for(const std::string &d : defines)
             out << d << "\n";
         for(const auto &po: pos){
-            out << "; PO group " << po.group << " \n";
+            out << "; PO group " << po.group << "\n";
             if (pos.size() > 1) out << "(push 1)\n";
             for(const auto &def: po.definitions){
                 for(int i=0;i<defArity.at(def);i++)
@@ -155,6 +159,7 @@ namespace ppTransIncr {
      const std::string &filename,
      map<int, vector<int>>& goals,
      bool model,
+     bool allPreludeOptions,
      const std::string &minint,
      const std::string &maxint)
     {
@@ -221,12 +226,13 @@ namespace ppTransIncr {
             pos.push_back(ppo);
         }
 
-        saveSmt(filename, model, minint, maxint, env, defines, defArity, pos);
+        saveSmt(pog, filename, model, allPreludeOptions, minint, maxint, env, defines, defArity, pos);
     }
 
     void saveSmtLibFileIncr(pog::Pog &pog,
             const std::string &filename,
             bool model,
+            bool allPreludeOptions,
             const std::string &minint,
             const std::string &maxint)
     {
@@ -271,7 +277,7 @@ namespace ppTransIncr {
             pos.push_back(ppo);
         }
 
-        saveSmt(filename, model, minint, maxint, env, defines, defArity, pos);
+        saveSmt(pog, filename, model, allPreludeOptions, minint, maxint, env, defines, defArity, pos);
     }
 
 }

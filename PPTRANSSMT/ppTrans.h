@@ -24,6 +24,7 @@
 #include<vector>
 #include <sstream>
 #include "pog.h"
+#include "optionPrelude.h"
 
 class ppTransException : public std::exception
 {
@@ -50,16 +51,20 @@ namespace ppTrans {
             const std::map<std::string,std::string> &getSmtLibDeclarations() const { return smtLibDeclarations; } ;
         private:
             std::map<BType,std::string> memberships = { {BType::POW_INT,"mem0"}, {BType::POW_REAL,"mem1"} };
-            std::map<BType,std::string> recordTypes; 
-            std::map<BType,std::string> iterates; 
-            std::map<std::string,std::string> stringLiterals; 
+            std::map<BType,std::string> recordTypes;
+            std::map<BType,std::string> iterates;
+            std::map<std::string,std::string> stringLiterals;
             std::map<TypedVar,std::string> globalIdents;
             std::vector<std::vector<TypedVar>> bv_stack;
             std::map<std::string,std::string> smtLibDeclarations = {};
     };
     void ppTrans(std::ostringstream &str, Context &ctx, const Pred &p, std::set<std::string> &used_ids);
     void ppTrans(std::ostringstream &str, Context &env, const pog::Set &set,std::set<std::string> &used_ids);
-    void printPrelude ( std::ofstream &out, const std::string &minint, const std::string &maxint );
+    void ppTrans(std::ostringstream &str, Context &env, const variant<pog::Set, Pred> &set,std::set<std::string> &used_ids);
+    void printPrelude(std::ofstream &out,
+                      const OptionPrelude options,
+                      const std::string &minint,
+                      const std::string &maxint);
 }
 
 #endif // PPTRANS_H

@@ -1,1 +1,6 @@
+.vscode
+
 build/
+
+test/setENV
+test/output/*/result/

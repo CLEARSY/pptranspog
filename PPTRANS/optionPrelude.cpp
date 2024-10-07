@@ -28,6 +28,7 @@ OptionPrelude::OptionPrelude(const pog::Pog &pog, bool default_value) {
                 if (std::holds_alternative<Pred>(c)) {
                     analyse(std::get<Pred>(c));
                 } else {
+                    cartesianProduct = true;
                     pog::Set s = std::get<pog::Set>(c);
                     analyse(s.setName.type);
                     for (auto &e : s.elts) {
@@ -169,14 +170,6 @@ void OptionPrelude::analyse(const Pred &p) {
 
 void OptionPrelude::analyse(const Expr::BinaryExpr &b) {
     switch (b.op) {
-    case Expr::BinaryOp::Mapplet:
-    case Expr::BinaryOp::Cartesian_Product:
-        cartesianProduct = true;
-        break;
-    case Expr::BinaryOp::Iteration:
-    case Expr::BinaryOp::Father:
-    case Expr::BinaryOp::Subtree:
-        break;
     case Expr::BinaryOp::Partial_Functions:
     case Expr::BinaryOp::Partial_Injections:
     case Expr::BinaryOp::Partial_Surjections:
@@ -185,30 +178,25 @@ void OptionPrelude::analyse(const Expr::BinaryExpr &b) {
     case Expr::BinaryOp::Total_Injections:
     case Expr::BinaryOp::Total_Surjections:
     case Expr::BinaryOp::Total_Bijections:
-        containsMem = true;
         pow = true;
         cartesianProduct = true;
         break;
+    case Expr::BinaryOp::Father:
+    case Expr::BinaryOp::Subtree:
     case Expr::BinaryOp::Interval:
     case Expr::BinaryOp::Intersection:
+    case Expr::BinaryOp::Iteration:
     case Expr::BinaryOp::Union:
     case Expr::BinaryOp::Set_Difference:
     case Expr::BinaryOp::Domain_Subtraction:
     case Expr::BinaryOp::Domain_Restriction:
     case Expr::BinaryOp::Head_Insertion:
     case Expr::BinaryOp::Head_Restriction:
-    case Expr::BinaryOp::Tail_Insertion:
     case Expr::BinaryOp::Tail_Restriction:
-        containsMem = true;
-        break;
     case Expr::BinaryOp::Direct_Product:
     case Expr::BinaryOp::Parallel_Product:
     case Expr::BinaryOp::First_Projection:
     case Expr::BinaryOp::Second_Projection:
-    case Expr::BinaryOp::Relations:
-        containsMem = true;
-        cartesianProduct = true;
-        break;
     case Expr::BinaryOp::Composition:
     case Expr::BinaryOp::Surcharge:
     case Expr::BinaryOp::Image:
@@ -221,8 +209,13 @@ void OptionPrelude::analyse(const Expr::BinaryExpr &b) {
     case Expr::BinaryOp::Range_Subtraction:
         containsMem = true;
         break;
-    case Expr::BinaryOp::Modulo:
+    case Expr::BinaryOp::Cartesian_Product:
+    case Expr::BinaryOp::Tail_Insertion:
+    case Expr::BinaryOp::Relations:
+        containsMem = true;
+        cartesianProduct = true;
         break;
+    case Expr::BinaryOp::Modulo:
     case Expr::BinaryOp::IAddition:
     case Expr::BinaryOp::ISubtraction:
     case Expr::BinaryOp::IMultiplication:
@@ -267,44 +260,33 @@ void OptionPrelude::analyse(const Expr &e, const Expr::EKind &k) {
     switch (k) {
     case Expr::EKind::MaxInt:
     case Expr::EKind::MinInt:
-        containsInt = true;
-        break;
     case Expr::EKind::NATURAL:
     case Expr::EKind::NATURAL1:
     case Expr::EKind::NAT:
     case Expr::EKind::NAT1:
     case Expr::EKind::INTEGER:
     case Expr::EKind::INT:
+    case Expr::EKind::IntegerLiteral:
         containsInt = true;
         break;
     case Expr::EKind::STRING:
+    case Expr::EKind::StringLiteral:
         containsString = true;
         break;
-    case Expr::EKind::BOOL:
-        break;
     case Expr::EKind::REAL:
+    case Expr::EKind::RealLiteral:
         containsReal = true;
         break;
     case Expr::EKind::FLOAT:
         containsFloat = true;
         break;
+    case Expr::EKind::BOOL:
+    case Expr::EKind::BooleanExpr:
     case Expr::EKind::TRUE:
     case Expr::EKind::FALSE:
     case Expr::EKind::EmptySet:
     case Expr::EKind::QuantifiedSet:
-        break;
-    case Expr::EKind::IntegerLiteral:
-        containsInt = true;
-        break;
-    case Expr::EKind::StringLiteral:
-        containsString = true;
-        break;
-    case Expr::EKind::RealLiteral:
-        containsReal = true;
-        break;
     case Expr::EKind::Id:
-        break;
-    case Expr::EKind::BooleanExpr:
         break;
     case Expr::EKind::QuantifiedExpr: {
         auto &q = e.toQuantiedExpr();
@@ -330,7 +312,6 @@ void OptionPrelude::analyse(const Expr &e, const Expr::EKind &k) {
             containsRProd = true;
             break;
         case Expr::QuantifiedOp::Lambda:
-            break;
         case Expr::QuantifiedOp::Intersection:
         case Expr::QuantifiedOp::Union:
             containsMem = true;
@@ -354,8 +335,22 @@ void OptionPrelude::analyse(const Expr &e, const Expr::EKind &k) {
         case Expr::UnaryOp::Ceiling:
             containsCeiling = true;
             break;
+        case Expr::UnaryOp::Finite_Subsets:
+        case Expr::UnaryOp::Non_Empty_Finite_Subsets:
+        case Expr::UnaryOp::Sequences:
+        case Expr::UnaryOp::Non_Empty_Sequences:
+        case Expr::UnaryOp::Injective_Sequences:
+        case Expr::UnaryOp::Non_Empty_Injective_Sequences:
+        case Expr::UnaryOp::Permutations:
+        case Expr::UnaryOp::Front:
+        case Expr::UnaryOp::Reverse:
         case Expr::UnaryOp::Cardinality:
+        case Expr::UnaryOp::Size:
             cartesianProduct = true;
+            break;
+        case Expr::UnaryOp::Concatenation:
+            cartesianProduct = true;
+            containsISum = true;
             break;
         default:
             break;

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Proof_Obligations xmlns="https://www.atelierb.eu/Formats/pog" version="1.0">
+    <Define name="B definitions" hash="7128875304803749033">
+        <Exp_Comparison op="=">
+            <Id value="NAT" typref="0"/>
+            <Binary_Exp op=".." typref="0">
+                <Integer_Literal value="0" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="INT" typref="0"/>
+            <Binary_Exp op=".." typref="0">
+                <Id value="MININT" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+    </Define>
+    <Define name="ctx" hash="0"/>
+    <Define name="seext" hash="0"/>
+    <Define name="lprp" hash="17683639549193590781">
+        <Exp_Comparison op="=">
+            <Id value="res_set" typref="2" tag="M_struct_rec.bxml:1:2:1:1:1"/>
+            <Struct typref="2">
+                <Record_Item label="Mark">
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_struct_rec.bxml:1:2:1:1:2:1:1:1"/>
+                        <Integer_Literal value="20" typref="1" tag="M_struct_rec.bxml:1:2:1:1:2:1:1:2"/>
+                    </Binary_Exp>
+                </Record_Item>
+                <Record_Item label="good_enough">
+                    <Id value="BOOL" typref="3" tag="M_struct_rec.bxml:1:2:1:1:2:2:1"/>
+                </Record_Item>
+            </Struct>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:2:1:2:1"/>
+            <Record typref="4">
+                <Record_Item label="Mark">
+                    <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:2:1:2:2:1:1"/>
+                </Record_Item>
+                <Record_Item label="good_enough">
+                    <Boolean_Literal value="TRUE" typref="5" tag="M_struct_rec.bxml:1:2:1:2:2:2:1"/>
+                </Record_Item>
+            </Record>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:2:1:3:1"/>
+            <Record typref="4">
+                <Record_Item label="Mark">
+                    <Integer_Literal value="9" typref="1" tag="M_struct_rec.bxml:1:2:1:3:2:1:1"/>
+                </Record_Item>
+                <Record_Item label="good_enough">
+                    <Boolean_Literal value="FALSE" typref="5" tag="M_struct_rec.bxml:1:2:1:3:2:2:1"/>
+                </Record_Item>
+            </Record>
+        </Exp_Comparison>
+    </Define>
+    <Define name="inprp" hash="0"/>
+    <Define name="inext" hash="0"/>
+    <Define name="inv" hash="0"/>
+    <Define name="ass" hash="6470777881850696009">
+        <Exp_Comparison op="=">
+            <Record_Field_Access label="Mark" typref="1">
+                <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:1:1:1"/>
+            </Record_Field_Access>
+            <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:1:2"/>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:2:1"/>
+            <Record typref="4">
+                <Record_Item label="Mark">
+                    <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:2:2:1:1"/>
+                </Record_Item>
+                <Record_Item label="good_enough">
+                    <Boolean_Literal value="TRUE" typref="5" tag="M_struct_rec.bxml:1:4:2:2:2:1"/>
+                </Record_Item>
+            </Record>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Record_Field_Access label="good_enough" typref="5">
+                <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:4:3:1:1"/>
+            </Record_Field_Access>
+            <Boolean_Literal value="FALSE" typref="5" tag="M_struct_rec.bxml:1:4:3:2"/>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:4:4:1"/>
+            <Id value="res_set" typref="2" tag="M_struct_rec.bxml:1:4:4:2"/>
+        </Exp_Comparison>
+    </Define>
+    <Define name="cst" hash="0"/>
+    <Define name="sets" hash="0"/>
+    <Proof_Obligation goalHash="5807463390615186884">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op="=">
+                    <Record_Field_Access label="Mark" typref="1">
+                        <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:1:1:1"/>
+                    </Record_Field_Access>
+                    <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:1:2"/>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="1998777259556011466">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Record_Field_Access label="Mark" typref="1">
+                    <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:1:1:1"/>
+                </Record_Field_Access>
+                <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:1:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:2:1"/>
+                <Record typref="4">
+                    <Record_Item label="Mark">
+                        <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:2:2:1:1"/>
+                    </Record_Item>
+                    <Record_Item label="good_enough">
+                        <Boolean_Literal value="TRUE" typref="5" tag="M_struct_rec.bxml:1:4:2:2:2:1"/>
+                    </Record_Item>
+                </Record>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op="=">
+                    <Record_Field_Access label="good_enough" typref="5">
+                        <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:4:3:1:1"/>
+                    </Record_Field_Access>
+                    <Boolean_Literal value="FALSE" typref="5" tag="M_struct_rec.bxml:1:4:3:2"/>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="14726706491341004909">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Record_Field_Access label="Mark" typref="1">
+                    <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:1:1:1"/>
+                </Record_Field_Access>
+                <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:1:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Id value="res1" typref="4" tag="M_struct_rec.bxml:1:4:2:1"/>
+                <Record typref="4">
+                    <Record_Item label="Mark">
+                        <Integer_Literal value="12" typref="1" tag="M_struct_rec.bxml:1:4:2:2:1:1"/>
+                    </Record_Item>
+                    <Record_Item label="good_enough">
+                        <Boolean_Literal value="TRUE" typref="5" tag="M_struct_rec.bxml:1:4:2:2:2:1"/>
+                    </Record_Item>
+                </Record>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op="=">
+                <Record_Field_Access label="good_enough" typref="5">
+                    <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:4:3:1:1"/>
+                </Record_Field_Access>
+                <Boolean_Literal value="FALSE" typref="5" tag="M_struct_rec.bxml:1:4:3:2"/>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="res2" typref="4" tag="M_struct_rec.bxml:1:4:4:1"/>
+                    <Id value="res_set" typref="2" tag="M_struct_rec.bxml:1:4:4:2"/>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <TypeInfos>
+        <Type id="0">
+            <Unary_Exp op="POW">
+                <Id value="INTEGER"/>
+            </Unary_Exp>
+        </Type>
+        <Type id="1">
+            <Id value="INTEGER"/>
+        </Type>
+        <Type id="2">
+            <Unary_Exp op="POW">
+                <Struct>
+                    <Record_Item label="Mark">
+                        <Id value="INTEGER"/>
+                    </Record_Item>
+                    <Record_Item label="good_enough">
+                        <Id value="BOOL"/>
+                    </Record_Item>
+                </Struct>
+            </Unary_Exp>
+        </Type>
+        <Type id="3">
+            <Unary_Exp op="POW">
+                <Id value="BOOL"/>
+            </Unary_Exp>
+        </Type>
+        <Type id="4">
+            <Struct>
+                <Record_Item label="Mark">
+                    <Id value="INTEGER"/>
+                </Record_Item>
+                <Record_Item label="good_enough">
+                    <Id value="BOOL"/>
+                </Record_Item>
+            </Struct>
+        </Type>
+        <Type id="5">
+            <Id value="BOOL"/>
+        </Type>
+    </TypeInfos>
+</Proof_Obligations>

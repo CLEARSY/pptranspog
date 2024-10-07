@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Proof_Obligations xmlns="https://www.atelierb.eu/Formats/pog" version="1.0">
+    <Define name="B definitions" hash="7128875304803749033">
+        <Exp_Comparison op="=">
+            <Id value="NAT" typref="0" />
+            <Binary_Exp op=".." typref="0">
+                <Integer_Literal value="0" typref="1" />
+                <Id value="MAXINT" typref="1" />
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="INT" typref="0" />
+            <Binary_Exp op=".." typref="0">
+                <Id value="MININT" typref="1" />
+                <Id value="MAXINT" typref="1" />
+            </Binary_Exp>
+        </Exp_Comparison>
+    </Define>
+    <Define name="ctx" hash="0" />
+    <Define name="seext" hash="0" />
+    <Define name="lprp" hash="13839988577455096836">
+        <Set>
+            <Id value="LANG" typref="0" />
+            <Enumerated_Values>
+                <Id value="de" typref="1" />
+                <Id value="en" typref="1" />
+                <Id value="es" typref="1" />
+                <Id value="fr" typref="1" />
+            </Enumerated_Values>
+        </Set>
+        <Set>
+            <Id value="COUNTRY" typref="0" />
+            <Enumerated_Values>
+                <Id value="BEL" typref="1" />
+                <Id value="DEU" typref="1" />
+                <Id value="FRA" typref="1" />
+                <Id value="ESP" typref="1" />
+                <Id value="GBR" typref="1" />
+            </Enumerated_Values>
+        </Set>
+        <Exp_Comparison op=":">
+            <Id value="lang1" typref="1" />
+            <Id value="LANG" typref="0" />
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="lang2" typref="1" />
+            <Id value="LANG" typref="0" />
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="country" typref="1" />
+            <Id value="COUNTRY" typref="0" />
+        </Exp_Comparison>
+    </Define>
+    <Define name="inprp" hash="0" />
+    <Define name="inext" hash="0" />
+    <Define name="inv" hash="0" />
+    <Define name="ass" hash="13611549564898541604">
+        <Exp_Comparison op="=">
+            <Id value="lang1" typref="1" />
+            <Id value="lang2" typref="1" />
+        </Exp_Comparison>
+    </Define>
+    <Define name="cst" hash="0" />
+    <Define name="sets" hash="7184148100313929483">
+        <Set>
+            <Id value="LANG" typref="0" />
+            <Enumerated_Values>
+                <Id value="de" typref="1" />
+                <Id value="en" typref="1" />
+                <Id value="es" typref="1" />
+                <Id value="fr" typref="1" />
+            </Enumerated_Values>
+        </Set>
+        <Set>
+            <Id value="COUNTRY" typref="0" />
+            <Enumerated_Values>
+                <Id value="BEL" typref="1" />
+                <Id value="DEU" typref="1" />
+                <Id value="FRA" typref="1" />
+                <Id value="ESP" typref="1" />
+                <Id value="GBR" typref="1" />
+            </Enumerated_Values>
+        </Set>
+    </Define>
+    <Proof_Obligation goalHash="12854804872075111067">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions" />
+        <Definition name="ctx" />
+        <Definition name="cst" />
+        <Definition name="lprp" />
+        <Definition name="inprp" />
+        <Definition name="inext" />
+        <Definition name="seext" />
+        <Definition name="inv" />
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op="=">
+                    <Id value="lang1" typref="1" />
+                    <Id value="lang2" typref="1" />
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <TypeInfos>
+        <Type id="0">
+            <Unary_Exp op="POW">
+                <Id value="INTEGER" />
+            </Unary_Exp>
+        </Type>
+        <Type id="1">
+            <Id value="INTEGER" />
+        </Type>
+    </TypeInfos>
+</Proof_Obligations>
