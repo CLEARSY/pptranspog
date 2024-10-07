@@ -23,7 +23,9 @@ tff(g_s1_0_type, type, g_s1_0 : set_0).
 % Defines
 tff('Define:lprp:0', axiom, $true).
 
-tff('Define:lprp:1', axiom, (! [X_5 : $int] : (((mem0(X_5, g_s1_0)) => ($true))))).
+tff('Define:lprp:1', axiom, $true).
+
+tff('Define:lprp:2', axiom, (! [X_5 : $int] : (((mem0(X_5, g_s1_0)) => ($true))))).
 
 %Global hypotheses
 % Local hypotheses

@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Proof_Obligations xmlns="https://www.atelierb.eu/Formats/pog" version="1.0">
+    <Define name="B definitions" hash="7128875304803749033">
+        <Exp_Comparison op="=">
+            <Id value="NAT" typref="0"/>
+            <Binary_Exp op=".." typref="0">
+                <Integer_Literal value="0" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="INT" typref="0"/>
+            <Binary_Exp op=".." typref="0">
+                <Id value="MININT" typref="1"/>
+                <Id value="MAXINT" typref="1"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+    </Define>
+    <Define name="ctx" hash="0"/>
+    <Define name="seext" hash="0"/>
+    <Define name="lprp" hash="697638238812603258">
+        <Exp_Comparison op="=">
+            <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:2:1:1:1"/>
+            <Nary_Exp op="{" typref="2">
+                <Binary_Exp op="|-&gt;" typref="3">
+                    <Integer_Literal value="2" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:1:1"/>
+                    <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:1:2"/>
+                </Binary_Exp>
+                <Binary_Exp op="|-&gt;" typref="3">
+                    <Integer_Literal value="5" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:2:1"/>
+                    <Integer_Literal value="9" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:2:2"/>
+                </Binary_Exp>
+                <Binary_Exp op="|-&gt;" typref="3">
+                    <Integer_Literal value="2" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:3:1"/>
+                    <Integer_Literal value="6" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:3:2"/>
+                </Binary_Exp>
+                <Binary_Exp op="|-&gt;" typref="3">
+                    <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:4:1"/>
+                    <Integer_Literal value="9" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:4:2"/>
+                </Binary_Exp>
+                <Binary_Exp op="|-&gt;" typref="3">
+                    <Integer_Literal value="5" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:5:1"/>
+                    <Integer_Literal value="3" typref="1" tag="M_partial_surjection.bxml:1:2:1:1:2:5:2"/>
+                </Binary_Exp>
+            </Nary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:2:1:2:1"/>
+            <Binary_Exp op="&lt;-&gt;" typref="4">
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:2:1:2:2:1"/>
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:2:1:2:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Unary_Exp op="dom" typref="0">
+                <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:2:1:3:1:1"/>
+            </Unary_Exp>
+            <Binary_Exp op=".." typref="0">
+                <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:2:1:3:2:1"/>
+                <Integer_Literal value="2" typref="1" tag="M_partial_surjection.bxml:1:2:1:3:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Unary_Exp op="ran" typref="0">
+                <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:2:1:4:1:1"/>
+            </Unary_Exp>
+            <Binary_Exp op=".." typref="0">
+                <Integer_Literal value="1" typref="1" tag="M_partial_surjection.bxml:1:2:1:4:2:1"/>
+                <Integer_Literal value="3" typref="1" tag="M_partial_surjection.bxml:1:2:1:4:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Quantified_Pred type="!">
+            <Variables>
+                <Id value="xx" typref="1"/>
+            </Variables>
+            <Body>
+                <Binary_Pred op="=&gt;">
+                    <Exp_Comparison op=":">
+                        <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:5:2:1:1:1"/>
+                        <Unary_Exp op="dom" typref="0">
+                            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:2:1:5:2:1:1:2:1"/>
+                        </Unary_Exp>
+                    </Exp_Comparison>
+                    <Exp_Comparison op="=">
+                        <Binary_Exp op="(" typref="1">
+                            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:2:1:5:2:1:2:1:1"/>
+                            <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:5:2:1:2:1:2"/>
+                        </Binary_Exp>
+                        <Binary_Exp op="+i" typref="1">
+                            <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:5:2:1:2:2:1"/>
+                            <Integer_Literal value="1" typref="1" tag="M_partial_surjection.bxml:1:2:1:5:2:1:2:2:2"/>
+                        </Binary_Exp>
+                    </Exp_Comparison>
+                </Binary_Pred>
+            </Body>
+        </Quantified_Pred>
+        <Exp_Comparison op="=">
+            <Id value="fun2" typref="2" tag="M_partial_surjection.bxml:1:2:1:6:1"/>
+            <Quantified_Set typref="2">
+                <Variables>
+                    <Id value="xx" typref="1"/>
+                    <Id value="yy" typref="1"/>
+                </Variables>
+                <Body>
+                    <Nary_Pred op="&amp;">
+                        <Exp_Comparison op=":">
+                            <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:1:1"/>
+                            <Binary_Exp op=".." typref="0">
+                                <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:1:2:1"/>
+                                <Integer_Literal value="2" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:1:2:2"/>
+                            </Binary_Exp>
+                        </Exp_Comparison>
+                        <Exp_Comparison op="=">
+                            <Id value="yy" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:2:1"/>
+                            <Binary_Exp op="+i" typref="1">
+                                <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:2:2:1"/>
+                                <Integer_Literal value="1" typref="1" tag="M_partial_surjection.bxml:1:2:1:6:2:2:1:2:2:2"/>
+                            </Binary_Exp>
+                        </Exp_Comparison>
+                    </Nary_Pred>
+                </Body>
+            </Quantified_Set>
+        </Exp_Comparison>
+        <Exp_Comparison op="=">
+            <Id value="fun3" typref="2" tag="M_partial_surjection.bxml:1:2:1:7:1"/>
+            <Quantified_Exp type="%" typref="2">
+                <Variables>
+                    <Id value="xx" typref="1"/>
+                </Variables>
+                <Pred>
+                    <Exp_Comparison op=":">
+                        <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:7:2:2:1:1"/>
+                        <Binary_Exp op=".." typref="0">
+                            <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:2:1:7:2:2:1:2:1"/>
+                            <Integer_Literal value="2" typref="1" tag="M_partial_surjection.bxml:1:2:1:7:2:2:1:2:2"/>
+                        </Binary_Exp>
+                    </Exp_Comparison>
+                </Pred>
+                <Body>
+                    <Binary_Exp op="+i" typref="1">
+                        <Id value="xx" typref="1" tag="M_partial_surjection.bxml:1:2:1:7:2:3:1:1"/>
+                        <Integer_Literal value="1" typref="1" tag="M_partial_surjection.bxml:1:2:1:7:2:3:1:2"/>
+                    </Binary_Exp>
+                </Body>
+            </Quantified_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun4" typref="5" tag="M_partial_surjection.bxml:1:2:1:8:1"/>
+            <Binary_Exp op="&lt;-&gt;" typref="6">
+                <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:2:1:8:2:1"/>
+                <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:2:1:8:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+    </Define>
+    <Define name="inprp" hash="0"/>
+    <Define name="inext" hash="0"/>
+    <Define name="inv" hash="0"/>
+    <Define name="ass" hash="17827052696705820415">
+        <Exp_Comparison op=":">
+            <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+            <Binary_Exp op="+-&gt;&gt;" typref="4">
+                <Binary_Exp op=".." typref="0">
+                    <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                    <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                </Binary_Exp>
+                <Binary_Exp op=".." typref="0">
+                    <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                    <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                </Binary_Exp>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:1"/>
+            <Binary_Exp op="+-&gt;&gt;" typref="4">
+                <Unary_Exp op="dom" typref="0">
+                    <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:1:1"/>
+                </Unary_Exp>
+                <Unary_Exp op="ran" typref="0">
+                    <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:2:1"/>
+                </Unary_Exp>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun2" typref="2" tag="M_partial_surjection.bxml:1:4:3:1"/>
+            <Binary_Exp op="+-&gt;&gt;" typref="4">
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:1"/>
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun3" typref="2" tag="M_partial_surjection.bxml:1:4:4:1"/>
+            <Binary_Exp op="+-&gt;&gt;" typref="4">
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:1"/>
+                <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+        <Exp_Comparison op=":">
+            <Id value="fun4" typref="5" tag="M_partial_surjection.bxml:1:4:5:1"/>
+            <Binary_Exp op="+-&gt;&gt;" typref="6">
+                <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:4:5:2:1"/>
+                <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:4:5:2:2"/>
+            </Binary_Exp>
+        </Exp_Comparison>
+    </Define>
+    <Define name="cst" hash="0"/>
+    <Define name="sets" hash="0"/>
+    <Proof_Obligation goalHash="1343967047690108018">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+                    <Binary_Exp op="+-&gt;&gt;" typref="4">
+                        <Binary_Exp op=".." typref="0">
+                            <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                            <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                        </Binary_Exp>
+                        <Binary_Exp op=".." typref="0">
+                            <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                            <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                        </Binary_Exp>
+                    </Binary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="5901289335480433501">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                        <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                    </Binary_Exp>
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                        <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                    </Binary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:1"/>
+                    <Binary_Exp op="+-&gt;&gt;" typref="4">
+                        <Unary_Exp op="dom" typref="0">
+                            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:1:1"/>
+                        </Unary_Exp>
+                        <Unary_Exp op="ran" typref="0">
+                            <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:2:1"/>
+                        </Unary_Exp>
+                    </Binary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="17016924216739712290">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                        <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                    </Binary_Exp>
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                        <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                    </Binary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Unary_Exp op="dom" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:1:1"/>
+                    </Unary_Exp>
+                    <Unary_Exp op="ran" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:2:1"/>
+                    </Unary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="fun2" typref="2" tag="M_partial_surjection.bxml:1:4:3:1"/>
+                    <Binary_Exp op="+-&gt;&gt;" typref="4">
+                        <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:1"/>
+                        <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:2"/>
+                    </Binary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="11201564197946962363">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                        <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                    </Binary_Exp>
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                        <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                    </Binary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Unary_Exp op="dom" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:1:1"/>
+                    </Unary_Exp>
+                    <Unary_Exp op="ran" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:2:1"/>
+                    </Unary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun2" typref="2" tag="M_partial_surjection.bxml:1:4:3:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:1"/>
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:2"/>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="fun3" typref="2" tag="M_partial_surjection.bxml:1:4:4:1"/>
+                    <Binary_Exp op="+-&gt;&gt;" typref="4">
+                        <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:1"/>
+                        <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:2"/>
+                    </Binary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <Proof_Obligation goalHash="15524177058066278490">
+        <Tag>AssertionLemmas</Tag>
+        <Definition name="B definitions"/>
+        <Definition name="ctx"/>
+        <Definition name="cst"/>
+        <Definition name="lprp"/>
+        <Definition name="inprp"/>
+        <Definition name="inext"/>
+        <Definition name="seext"/>
+        <Definition name="inv"/>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="rel1" typref="2" tag="M_partial_surjection.bxml:1:4:1:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:1"/>
+                        <Integer_Literal value="7" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:1:2"/>
+                    </Binary_Exp>
+                    <Binary_Exp op=".." typref="0">
+                        <Integer_Literal value="0" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:1"/>
+                        <Integer_Literal value="10" typref="1" tag="M_partial_surjection.bxml:1:4:1:2:2:2"/>
+                    </Binary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Unary_Exp op="dom" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:1:1"/>
+                    </Unary_Exp>
+                    <Unary_Exp op="ran" typref="0">
+                        <Id value="fun1" typref="2" tag="M_partial_surjection.bxml:1:4:2:2:2:1"/>
+                    </Unary_Exp>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun2" typref="2" tag="M_partial_surjection.bxml:1:4:3:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:1"/>
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:3:2:2"/>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Hypothesis>
+            <Exp_Comparison op=":">
+                <Id value="fun3" typref="2" tag="M_partial_surjection.bxml:1:4:4:1"/>
+                <Binary_Exp op="+-&gt;&gt;" typref="4">
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:1"/>
+                    <Id value="INTEGER" typref="0" tag="M_partial_surjection.bxml:1:4:4:2:2"/>
+                </Binary_Exp>
+            </Exp_Comparison>
+        </Hypothesis>
+        <Simple_Goal>
+            <Tag>Assertion is verified</Tag>
+            <Goal>
+                <Exp_Comparison op=":">
+                    <Id value="fun4" typref="5" tag="M_partial_surjection.bxml:1:4:5:1"/>
+                    <Binary_Exp op="+-&gt;&gt;" typref="6">
+                        <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:4:5:2:1"/>
+                        <Id value="REAL" typref="7" tag="M_partial_surjection.bxml:1:4:5:2:2"/>
+                    </Binary_Exp>
+                </Exp_Comparison>
+            </Goal>
+        </Simple_Goal>
+    </Proof_Obligation>
+    <TypeInfos>
+        <Type id="0">
+            <Unary_Exp op="POW">
+                <Id value="INTEGER"/>
+            </Unary_Exp>
+        </Type>
+        <Type id="1">
+            <Id value="INTEGER"/>
+        </Type>
+        <Type id="2">
+            <Unary_Exp op="POW">
+                <Binary_Exp op="*">
+                    <Id value="INTEGER"/>
+                    <Id value="INTEGER"/>
+                </Binary_Exp>
+            </Unary_Exp>
+        </Type>
+        <Type id="3">
+            <Binary_Exp op="*">
+                <Id value="INTEGER"/>
+                <Id value="INTEGER"/>
+            </Binary_Exp>
+        </Type>
+        <Type id="4">
+            <Unary_Exp op="POW">
+                <Unary_Exp op="POW">
+                    <Binary_Exp op="*">
+                        <Id value="INTEGER"/>
+                        <Id value="INTEGER"/>
+                    </Binary_Exp>
+                </Unary_Exp>
+            </Unary_Exp>
+        </Type>
+        <Type id="5">
+            <Unary_Exp op="POW">
+                <Binary_Exp op="*">
+                    <Id value="REAL"/>
+                    <Id value="REAL"/>
+                </Binary_Exp>
+            </Unary_Exp>
+        </Type>
+        <Type id="6">
+            <Unary_Exp op="POW">
+                <Unary_Exp op="POW">
+                    <Binary_Exp op="*">
+                        <Id value="REAL"/>
+                        <Id value="REAL"/>
+                    </Binary_Exp>
+                </Unary_Exp>
+            </Unary_Exp>
+        </Type>
+        <Type id="7">
+            <Unary_Exp op="POW">
+                <Id value="REAL"/>
+            </Unary_Exp>
+        </Type>
+    </TypeInfos>
+</Proof_Obligations>

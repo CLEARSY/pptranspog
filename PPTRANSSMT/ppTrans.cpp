@@ -2348,6 +2348,59 @@ namespace ppTrans {
         }
     }
 
+<<<<<<< HEAD
+=======
+    void printPrelude(std::ofstream &out,
+                    const OptionPrelude options,
+                    const std::string &minint, const std::string &maxint) {
+        out << "; Prelude\n";
+        if (options.contains(OptionPrelude::Option::Mem) ||
+            options.contains(OptionPrelude::Option::Pow)) {
+            out << "(declare-sort P 1)\n";
+            out << "(declare-fun mem0 (Int (P Int)) Bool)\n";
+            if (options.contains(OptionPrelude::Option::Real)) {
+                out << "(declare-fun mem1 (Real (P Real)) Bool)\n";
+            }
+        }
+        if (options.contains(OptionPrelude::Option::CartesianProduct)) {
+            out << "(declare-sort C 2)\n";
+        }
+        if (options.contains(OptionPrelude::Option::Float)) {
+            out << "(declare-sort Float 0)\n";
+        }
+        if (options.contains(OptionPrelude::Option::Division)) {
+            out << SMTLIB::divB;
+        }
+        if (options.contains(OptionPrelude::Option::IExp)) {
+            out << SMTLIB::iexp;
+        }
+        if (options.contains(OptionPrelude::Option::RExp)) {
+            out << SMTLIB::rexp;
+        }
+        if (options.contains(OptionPrelude::Option::Int)) {
+            out << "(define-fun MinInt () Int " << minint << ")\n";
+            out << "(define-fun MaxInt () Int " << maxint << ")\n";
+        }
+        if (options.contains(OptionPrelude::Option::ISum)) {
+            out << SMTLIB::isum;
+        }
+        if (options.contains(OptionPrelude::Option::IProd)) {
+            out << SMTLIB::iprod;
+        }
+        if (options.contains(OptionPrelude::Option::Ceiling)) {
+            out << SMTLIB::ceiling;
+        }
+        if (options.contains(OptionPrelude::Option::RSum)) {
+            out << SMTLIB::rsum;
+        }
+        if (options.contains(OptionPrelude::Option::RProd)) {
+            out << SMTLIB::rprod;
+        }
+        if (options.contains(OptionPrelude::Option::Float)) {
+            out << SMTLIB::fcomp << SMTLIB::fop;
+        }
+    }
+>>>>>>> 931f376 (Adds a test suite covering the expression language [#69381])
 
     void printPrelude (
             std::ofstream &out,

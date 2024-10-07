@@ -1,0 +1,11 @@
+MACHINE M_INTEGER
+ABSTRACT_CONSTANTS
+    aa, bb
+PROPERTIES
+    aa : INTEGER &
+    bb : INTEGER
+ASSERTIONS
+    0 : INTEGER &
+    1 /: INTEGER &
+    aa * bb : INTEGER
+END

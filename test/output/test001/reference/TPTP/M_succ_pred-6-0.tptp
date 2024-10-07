@@ -24,7 +24,9 @@ tff(g_c1_1_type, type, g_c1_1 : $int).
 % Defines
 tff('Define:lprp:0', axiom, $true).
 
-tff('Define:lprp:1', axiom, (! [X_5 : $int] : (((mem0(X_5, g_s1_0)) => ($true))))).
+tff('Define:lprp:1', axiom, $true).
+
+tff('Define:lprp:2', axiom, (! [X_5 : $int] : (((mem0(X_5, g_s1_0)) => ($true))))).
 
 %Global hypotheses
 tff('gh_0_def', hypothesis, 1 = $sum(1, 1)).

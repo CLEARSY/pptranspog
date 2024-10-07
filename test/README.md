@@ -16,6 +16,9 @@ Reference results have been validated by applying tools and manual inspection.
 - The validator for the TPTP output produced by the encoder PPTransTPTP is TPTP4X.
 - The validator for the SMT output produced by the encoder PPTransSmt is CVC5 (<https://cvc5.github.io/>).
 
+You can also use the `test/output/check_reference.sh` script to run [dolmen](https://github.com/Gbury/dolmen) validator over all SMT and TPTP reference outputs.
+You will first have to set a path do `dolmen` binary.
+
 The POG files used to test the encoders have been produced by the bxml and pog tools distributed with Atelier B (<https://atelierb.eu>) from B source files.
 Note that the source code of the bxml tool is available at <https://github.com/CLEARSY/BCOMPILER>.
 
@@ -45,3 +48,14 @@ echo $? > output/$test/reference/TPTP/exitcode
 
 6. Validate the contents of the output reference test directories
 7. Update file CMakeLists.txt in this directory to add the new test to the test suite.
+
+## Get a coverage report
+
+It is possible to generate a HTML code coverage report for `PPTRANS`, `PPTranSMT` and `PPTransTPTP`:
+```bash
+mkdir -p build-coverage
+cd build-coverage
+cmake -DCMAKE_BUILD_TYPE=Coverage ..
+cmake --build .
+cmake --build . --target pog-translators_coverage
+```

@@ -41,6 +41,20 @@ if(PROJECT_IS_TOP_LEVEL)
   add_subdirectory(BAST)
 endif()
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMakeModules)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Coverage")
+    include(CodeCoverage)
+
+    setup_target_for_coverage_gcovr_html(
+        NAME ${PROJECT_NAME}_coverage
+        EXECUTABLE ctest .
+        EXCLUDE ${CMAKE_SOURCE_DIR}/BAST ${CMAKE_SOURCE_DIR}/POGLoader
+    )
+
+    SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
+endif()
+
 add_subdirectory(POGLoader)
 add_subdirectory(PPTRANS)
 add_subdirectory(PPTRANSSMT)
